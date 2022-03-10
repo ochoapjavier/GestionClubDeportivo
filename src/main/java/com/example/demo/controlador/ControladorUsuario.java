@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demo.bbdd.Repositorio;
+import com.example.demo.bbdd.UsuarioServicio;
 import com.example.demo.model.Usuario;
 
 @Controller
-public class Controlador {
+public class ControladorUsuario {
 	@Autowired
-	Repositorio usuarioRepositorio;
+	UsuarioServicio usuarioRepositorio;
 	
 	@GetMapping({"/index","index.html"})
 	public String getIndex() {
@@ -63,6 +63,10 @@ public class Controlador {
 	public String getAreaPersonalCoordinador() {
 		return "area-personal-coordinador";
 	}
+	@GetMapping({"/dashboard-administrador","/dashboard-administrador.html"})
+	public String getAreaDashboardAdministrador() {
+		return "dashboard-administrador";
+	}
 	
 	@GetMapping({"/dashboard-coordinador","/dashboard-coordinador.html"})
 	public String getAreaDashboardCoordinador() {
@@ -95,6 +99,14 @@ public class Controlador {
 		return "nuevo-usuario";
 	}
 	
+	@GetMapping({"/nuevo-coordinador","/nuevo-coordinador.html"})
+	public String getNuevoCoordinadoro(Model modelo) {
+		Usuario u = new Usuario();
+		u.setRol("Coordinador");
+		modelo.addAttribute("usuario",u);
+		return "nuevo-usuario";
+	}
+	
 	@PostMapping ("/save")
 	public String save (@Validated Usuario u, Model modelo) {
 		usuarioRepositorio.saveUsuario(u);
@@ -123,6 +135,9 @@ public class Controlador {
 			case "Coordinador":
 				modelo.addAttribute("success", "Login exitoso (coordinador) de " + usuarioRepositorio.getUsuario(email).getNombre());
 				return "dashboard-coordinador";
+			case "Administrador":
+				modelo.addAttribute("success", "Login exitoso (administrador) de " + usuarioRepositorio.getUsuario(email).getNombre());
+				return "dashboard-administrador";
 			default:
 				break;
 			}

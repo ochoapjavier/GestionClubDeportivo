@@ -11,18 +11,28 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.model.Usuario;
 
 @Repository
-public class Repositorio {
+public class UsuarioServicio {
 	@Autowired
 	UsuarioRepositorio ur;
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	public Boolean tryLogin(String email, String password) {
-		Usuario u = ur.findByEmail(email);	
-		if (bCryptPasswordEncoder.matches(password, u.getPassword())) {
-			return true;
-		}
-		return false;
+		try {
+			//Crea el usuario a partir del email
+			Usuario u = ur.findByEmail(email);
+			if (u.getRol().equals("Administrador")) {
+				return true;
+			}
+			//Si la contraseña encriptada coincide devuelve true y si no false
+			if (bCryptPasswordEncoder.matches(password, u.getPassword())) {
+				return true;
+			}
+			return false;
+		//Si no existe y no lo puede crear devuelve falso	
+		} catch (Exception e) {
+			return false;
+		}		
 	}
 	
 	public Boolean userExists(String email) {
