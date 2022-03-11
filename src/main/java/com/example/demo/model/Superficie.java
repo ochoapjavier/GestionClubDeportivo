@@ -11,6 +11,7 @@ public class Superficie {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String nombre;
+	private String deporte;
 	
 	public Superficie(String nombre) {
 		this.nombre = nombre;
@@ -26,6 +27,14 @@ public class Superficie {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public String getDeporte() {
+		return deporte;
+	}
+
+	public void setDeporte(String deporte) {
+		this.deporte = deporte;
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.example.demo.controlador;
+package com.example.demo.controladores;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demo.bbdd.UsuarioServicio;
 import com.example.demo.model.Usuario;
+import com.example.demo.servicios.UsuarioServicio;
 
 @Controller
 public class ControladorUsuario {

@@ -27,6 +27,14 @@ public class PistaPadel {
 		
 	}
 
+	public int getId_pista() {
+		return id_pista;
+	}
+
+	public void setId_pista(int id_pista) {
+		this.id_pista = id_pista;
+	}
+
 	public String getNombre() {
 		return nombre;
 	}

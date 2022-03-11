@@ -1,4 +1,4 @@
-package com.example.demo.bbdd;
+package com.example.demo.servicios;
 
 
 
@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import com.example.demo.bbdd.UsuarioRepositorio;
 import com.example.demo.model.Usuario;
 
 @Repository

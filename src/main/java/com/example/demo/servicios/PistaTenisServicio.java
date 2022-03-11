@@ -1,10 +1,11 @@
-package com.example.demo.bbdd;
+package com.example.demo.servicios;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.example.demo.bbdd.PistaTenisRepositorio;
 import com.example.demo.model.PistaTenis;
 import com.example.demo.model.Usuario;
 

@@ -1,4 +1,4 @@
-package com.example.demo.controlador;
+package com.example.demo.controladores;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,11 +7,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.demo.bbdd.PistaPadelServicio;
-import com.example.demo.bbdd.PistaTenisServicio;
-import com.example.demo.bbdd.SuperficiesServicio;
 import com.example.demo.model.PistaPadel;
 import com.example.demo.model.PistaTenis;
+import com.example.demo.servicios.PistaPadelServicio;
+import com.example.demo.servicios.PistaTenisServicio;
+import com.example.demo.servicios.SuperficiesServicio;
 
 @Controller
 public class ControladorPista {
@@ -27,7 +27,7 @@ public class ControladorPista {
 		PistaTenis p = new PistaTenis();
 		modelo.addAttribute("pista",p);
 		modelo.addAttribute("tipo","tenis");
-		modelo.addAttribute("pistas",sr.listarSuperficies());
+		modelo.addAttribute("pistas",sr.listarSuperficiesDeporte("tenis"));
 		return "nueva-pista";
 	}
 	
@@ -36,7 +36,7 @@ public class ControladorPista {
 		PistaPadel p = new PistaPadel();
 		modelo.addAttribute("pista",p);
 		modelo.addAttribute("tipo","padel");
-		modelo.addAttribute("pistas",sr.listarSuperficies());
+		modelo.addAttribute("pistas",sr.listarSuperficiesDeporte("padel"));
 		return "nueva-pista";
 	}
 	
