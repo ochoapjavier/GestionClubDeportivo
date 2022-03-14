@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.model.PistaPadel;
 
 @Repository
-public interface PistaPadelRepositorio extends JpaRepository<PistaPadel, Integer> {
+public interface PistaPadelRepositorio extends JpaRepository<PistaPadel, String> {
 	public PistaPadel findByNombre(String nombre);
 
 }

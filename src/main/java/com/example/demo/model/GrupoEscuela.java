@@ -9,17 +9,17 @@ import javax.persistence.Id;
 public class GrupoEscuela {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int id_grupo;
 	private String deporte;
 	private int id_monitor;
-	private int id_pista;
+	private String id_pista;
 	//private List<Usuario> listaAlumnos;
 	
 	public GrupoEscuela() {
 
 	}
 	
-	public GrupoEscuela(String deporte, int id_monitor, int id_pista) {
+	public GrupoEscuela(String deporte, int id_monitor, String id_pista) {
 		this.deporte = deporte;
 		this.id_monitor = id_monitor;
 		this.id_pista = id_pista;
@@ -39,11 +39,11 @@ public class GrupoEscuela {
 		this.id_monitor = id_monitor;
 	}
 
-	public int getId_pista() {
+	public String getId_pista() {
 		return id_pista;
 	}
 
-	public void setId_pista(int id_pista) {
+	public void setId_pista(String id_pista) {
 		this.id_pista = id_pista;
 	}
 }

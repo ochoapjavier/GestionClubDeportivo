@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.bbdd.PistaTenisRepositorio;
 import com.example.demo.model.PistaTenis;
-import com.example.demo.model.Usuario;
 
 @Repository
 public class PistaTenisServicio {

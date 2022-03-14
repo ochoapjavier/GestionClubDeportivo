@@ -43,12 +43,14 @@ public class ControladorPista {
 	
 	@PostMapping ("/save-pista-tenis")
 	public String savePistaTenis (@Validated PistaTenis p, Model modelo) {
+		p.setId_pista("");
 		pts.savePista(p);
 		return "dashboard-coordinador";
 	}
 	
 	@PostMapping ("/save-pista-padel")
 	public String savePistaPadel (@Validated PistaPadel p, Model modelo) {
+		p.setId_pista("");
 		pps.savePista(p);
 		return "dashboard-coordinador";
 	}
