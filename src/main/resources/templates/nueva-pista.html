@@ -9,7 +9,7 @@
     <meta name="author" content="Javier Ochoa">
     
   
-    <title>Nuevo Usuario</title>
+    <title>Nueva pista</title>
     <link rel="shortcut icon" type="image/png" href="images/logo.png">
   
     <!-- bootstrap.min css -->
@@ -87,7 +87,7 @@
 			  	<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Escuelas</a>
 					<ul class="dropdown-menu" aria-labelledby="dropdown03">
-						<li><a class="dropdown-item" href="about.html">Escuela de pádel</a></li>
+						<li><a class="dropdown-item" href="about.html">Escuela de p�del</a></li>
 						<li><a class="dropdown-item" href="precios.html">Escuela de tenis</a></li>
 					</ul>
 			  	</li>
@@ -102,7 +102,7 @@
 					</ul>
 			  </li>
 			   <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-			   <li class="nav-item"><a class="nav-link" href="eventos.html">Organización de eventos</a></li>
+			   <li class="nav-item"><a class="nav-link" href="eventos.html">Organizaci�n de eventos</a></li>
 			</ul>
 
 			<form class="form-lg-inline my-2 my-md-0 ml-lg-4 text-center">
@@ -118,12 +118,11 @@
 <body>
 	<div class="container mt-4">
 		<div class="col-sm-8 mx-auto">
-			<form th:action="@{/save}" th:object =${usuario} method="POST" >
+			<form th:action="@{/save-pista-} + ${tipo}" th:object =${pista} method="POST" >
 				<div class="card">
-					<div class="card-header" th:switch="${usuario.rol}">										
-						<h3 align="center" th:case="'Monitor'">Agregar Monitor</h3>
-						<h3 align="center" th:case="'Coordinador'" >Agregar Coordinador</h3>
-						<h3 align="center" th:case="'Usuario'" >Agregar Usuario</h3>
+					<div class="card-header">					
+						<h3 align="center" th:if="${tipo == 'padel'}">Nueva Pista de Pádel</h3>
+						<h3 align="center" th:if="${tipo == 'tenis'}">Nueva Pista de Tenis</h3>
 					</div>
 					<div class="card-body">
 						<div class="form-group">
@@ -131,25 +130,28 @@
 							<input th:field="*{nombre}" type="text" class="form-control"/>
 						</div>
 						<div class="form-group">
-							<label>Primer Apellido</label>
-							<input th:field="*{apellido1}" type="text" class="form-control"/>
+							<label>Superficie</label>					
+							<select th:field="${pista.superficie}">
+							  <option th:each="sup:${pistas}" th:text="${sup.nombre}" th:value="${sup.nombre}"></option>
+							</select >
 						</div>
 						<div class="form-group">
-							<label>Segundo Apellido</label>
-							<input th:field="*{apellido2}" type="text" class="form-control"/>
-						</div>
+							<label th:if="${tipo == 'padel'}">Tipo de pared</label >
+							<select th:if="${tipo == 'padel'}" th:field="${pista.tipoPared}">
+							  <option th:value="'Muro'" th:text="Muro"></option> 
+							  <option th:value="'Cristal'" th:text="Cristal"></option> 
+							  <option th:value="'Panorámica'" th:text="Panorámica"></option> 
+							</select  >
+						</div>	
 						<div class="form-group">
-							<label>Email</label>
-							<input th:field="*{email}" type="email" class="form-control"/>
-						</div>
-						<div class="form-group">
-							<label>Contraseña</label>
-							<input th:field="*{password}" type="password" class="form-control"/>
-						</div>
-						<div class="form-group">
-							<input hidden th:field="*{rol}" type="text" class="form-control" th:value = "${usuario.rol == 'Monitor'}?'Monitor':'Usuario'"/>
-						</div>
-					</div>
+							<label th:if="${tipo == 'padel'}">Cobertura</label >
+							<select th:if="${tipo == 'padel'}" th:field="${pista.cobertura}">
+							  <option th:value="'Exterior'" th:text="Exterior"></option> 
+							  <option th:value="'Cubierta'" th:text="Cubierta"></option> 
+							  <option th:value="'Indoor'" th:text="Indoor"></option> 
+							</select >
+						</div>													
+					</div>														
 					<div class="card-footer text-center">
 						<input type="submit" value="Guardar" class="btn btn-success btn-round-full"/>
 					</div>

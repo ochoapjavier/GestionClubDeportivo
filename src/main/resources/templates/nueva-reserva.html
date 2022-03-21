@@ -9,7 +9,7 @@
     <meta name="author" content="Javier Ochoa">
     
   
-    <title>Nuevo Usuario</title>
+    <title>Nueva reserva</title>
     <link rel="shortcut icon" type="image/png" href="images/logo.png">
   
     <!-- bootstrap.min css -->
@@ -118,37 +118,29 @@
 <body>
 	<div class="container mt-4">
 		<div class="col-sm-8 mx-auto">
-			<form th:action="@{/save}" th:object =${usuario} method="POST" >
+			<form th:action="@{/save-reserva}" th:object =${reserva} method="POST" >
 				<div class="card">
-					<div class="card-header" th:switch="${usuario.rol}">										
-						<h3 align="center" th:case="'Monitor'">Agregar Monitor</h3>
-						<h3 align="center" th:case="'Coordinador'" >Agregar Coordinador</h3>
-						<h3 align="center" th:case="'Usuario'" >Agregar Usuario</h3>
+					<div class="card-header">										
+						<h3 align="center" th:if="${tipo == 'padel'}">Nueva Reserva de Pádel</h3>
+						<h3 align="center" th:if="${tipo == 'tenis'}">Nueva Reserva de Tenis</h3>
 					</div>
 					<div class="card-body">
 						<div class="form-group">
-							<label>Nombre</label>
-							<input th:field="*{nombre}" type="text" class="form-control"/>
+							<label>Pista</label>
+							<select th:field="${reserva.id_pista}">
+							  <option th:each="pista:${pistas}" th:text="${pista.nombre}" th:value="${pista.id_pista}"></option>
+							</select >
 						</div>
 						<div class="form-group">
-							<label>Primer Apellido</label>
-							<input th:field="*{apellido1}" type="text" class="form-control"/>
-						</div>
+							<label>Fecha de reserva</label>
+							<input th:field="*{fecha}" type="date" id="datefield" min='1899-01-01' max='2000-13-13' >
+						</div> 
 						<div class="form-group">
-							<label>Segundo Apellido</label>
-							<input th:field="*{apellido2}" type="text" class="form-control"/>
-						</div>
-						<div class="form-group">
-							<label>Email</label>
-							<input th:field="*{email}" type="email" class="form-control"/>
-						</div>
-						<div class="form-group">
-							<label>Contraseña</label>
-							<input th:field="*{password}" type="password" class="form-control"/>
-						</div>
-						<div class="form-group">
-							<input hidden th:field="*{rol}" type="text" class="form-control" th:value = "${usuario.rol == 'Monitor'}?'Monitor':'Usuario'"/>
-						</div>
+							<label>Horario</label>
+							<select th:field="${reserva.id_horario}">
+							  <option th:each="horario:${horarios}" th:text="${#calendars.format(horario.hora_inicio,'HH:mm')} +' - ' +${#calendars.format(horario.hora_fin,'HH:mm')}" th:value="${horario.id}"></option>
+							</select >
+						</div>					
 					</div>
 					<div class="card-footer text-center">
 						<input type="submit" value="Guardar" class="btn btn-success btn-round-full"/>
@@ -157,6 +149,25 @@
 			</form >
 		</div>
 	</div>
+	<script>
+    	var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth() + 1; //January is 0!
+		var yyyy = today.getFullYear();
+		
+		if (dd < 10) {
+		   dd = '0' + dd;
+		}
+		
+		if (mm < 10) {
+		   mm = '0' + mm;
+		} 
+		    
+		today = yyyy + '-' + mm + '-' + dd;
+		document.getElementById("datefield").setAttribute("min", today);   
+         
+    </script>
 </body>
+
 
 </html>

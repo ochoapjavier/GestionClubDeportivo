@@ -9,7 +9,7 @@
     <meta name="author" content="Javier Ochoa">
     
   
-    <title>Nuevo Usuario</title>
+    <title>Nuevo grupo</title>
     <link rel="shortcut icon" type="image/png" href="images/logo.png">
   
     <!-- bootstrap.min css -->
@@ -118,37 +118,26 @@
 <body>
 	<div class="container mt-4">
 		<div class="col-sm-8 mx-auto">
-			<form th:action="@{/save}" th:object =${usuario} method="POST" >
+			<form th:action="@{/save-grupo-} + ${tipo}" th:object =${grupo} method="POST" >
 				<div class="card">
-					<div class="card-header" th:switch="${usuario.rol}">										
-						<h3 align="center" th:case="'Monitor'">Agregar Monitor</h3>
-						<h3 align="center" th:case="'Coordinador'" >Agregar Coordinador</h3>
-						<h3 align="center" th:case="'Usuario'" >Agregar Usuario</h3>
+					<div class="card-header">										
+						<h3 align="center" th:if="${tipo == 'padel'}">Nuevo Grupo de Pádel</h3>
+						<h3 align="center" th:if="${tipo == 'tenis'}">Nuevo Grupo de Tenis</h3>
 					</div>
 					<div class="card-body">
 						<div class="form-group">
-							<label>Nombre</label>
-							<input th:field="*{nombre}" type="text" class="form-control"/>
+							<label>Monitor</label>
+							<select th:field="${grupo.id_monitor}">
+							  <option th:each="monitor:${monitores}" th:text="${monitor.nombre} +' '+ ${monitor.apellido1}" th:value="${monitor.id}"></option>
+							</select >
 						</div>
 						<div class="form-group">
-							<label>Primer Apellido</label>
-							<input th:field="*{apellido1}" type="text" class="form-control"/>
+							<label>Pista</label>
+							<select th:field="${grupo.id_pista}">
+							  <option th:each="pista:${pistas}" th:text="${pista.nombre}" th:value="${pista.id_pista}"></option>
+							</select >
 						</div>
-						<div class="form-group">
-							<label>Segundo Apellido</label>
-							<input th:field="*{apellido2}" type="text" class="form-control"/>
-						</div>
-						<div class="form-group">
-							<label>Email</label>
-							<input th:field="*{email}" type="email" class="form-control"/>
-						</div>
-						<div class="form-group">
-							<label>Contraseña</label>
-							<input th:field="*{password}" type="password" class="form-control"/>
-						</div>
-						<div class="form-group">
-							<input hidden th:field="*{rol}" type="text" class="form-control" th:value = "${usuario.rol == 'Monitor'}?'Monitor':'Usuario'"/>
-						</div>
+						
 					</div>
 					<div class="card-footer text-center">
 						<input type="submit" value="Guardar" class="btn btn-success btn-round-full"/>
