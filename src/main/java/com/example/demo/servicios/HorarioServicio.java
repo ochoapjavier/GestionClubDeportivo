@@ -1,5 +1,6 @@
 package com.example.demo.servicios;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,10 @@ public class HorarioServicio {
 	
 	public List<Horario> listarHorarios(){
 		return hr.findAll();
+	}
+	
+	public List<Horario> listarHorariosByPistaAndFecha(String id_pista, Date fecha){
+		return hr.findByIdPistaAndFecha(id_pista, fecha);
 	}
 		
 }
