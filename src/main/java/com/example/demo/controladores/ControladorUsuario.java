@@ -110,7 +110,7 @@ public class ControladorUsuario {
 	@PostMapping ("/save")
 	public String save (@Validated Usuario u, Model modelo) {
 		usuarioRepositorio.saveUsuario(u);
-		return "area-personal-coordinador";
+		return "dashboard-coordinador";
 	}
 
 	@PostMapping({"/busqueda-usuarios","/busqueda-usuarios.html"})
