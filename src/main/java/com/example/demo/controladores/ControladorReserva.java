@@ -66,7 +66,7 @@ public class ControladorReserva {
 	
 	@PostMapping ("/save-reserva")
 	public String saveReserva (@Validated ReservaPista reserva, Model modelo) {
-		modelo.addAttribute("horariosDispo",hs.listarHorariosByPistaAndFecha(reserva.getId_pista(), reserva.getFecha()));
+		//modelo.addAttribute("horariosDispo",hs.listarHorariosByPistaAndFecha(reserva.getId_pista(), reserva.getFecha()));
 		rps.saveReserva(reserva);
 		return "dashboard-coordinador";
 	}

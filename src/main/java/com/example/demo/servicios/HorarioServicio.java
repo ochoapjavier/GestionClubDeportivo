@@ -17,9 +17,5 @@ public class HorarioServicio {
 	public List<Horario> listarHorarios(){
 		return hr.findAll();
 	}
-	
-	public List<Horario> listarHorariosByPistaAndFecha(String id_pista, Date fecha){
-		return hr.findByIdPistaAndFecha(id_pista, fecha);
-	}
-		
+			
 }

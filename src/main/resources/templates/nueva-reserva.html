@@ -127,19 +127,19 @@
 					<div class="card-body">
 						<div class="form-group">
 							<label>Pista</label>
-							<select th:field="${reserva.id_pista}">
+							<select onchange="refrescaHorarios()" id="idPista" th:field="${reserva.id_pista}" required>
 							  <option th:each="pista:${pistas}" th:text="${pista.nombre}" th:value="${pista.id_pista}"></option>
-							</select >
+							</select   >
 						</div>
 						<div class="form-group">
 							<label>Fecha de reserva</label>
-							<input th:field="*{fecha}" type="date" id="datefield" min='1899-01-01' max='2000-13-13' >
+							<input onchange="refrescaHorarios()" th:field="*{fecha}" type="date" id="datefield" min='1899-01-01' max='2000-13-13' required>
 						</div> 
 						<div class="form-group">
 							<label>Horario</label>
-							<select th:field="${reserva.id_horario}">
+							<select th:field="${reserva.id_horario}" required>
 							  <option th:each="horario:${horarios}" th:text="${#calendars.format(horario.hora_inicio,'HH:mm')} +' - ' +${#calendars.format(horario.hora_fin,'HH:mm')}" th:value="${horario.id}"></option>
-							</select >
+							</select  >
 						</div>					
 					</div>
 					<div class="card-footer text-center">
@@ -164,8 +164,30 @@
 		} 
 		    
 		today = yyyy + '-' + mm + '-' + dd;
-		document.getElementById("datefield").setAttribute("min", today);   
-         
+		document.getElementById("datefield").setAttribute("min", today);
+		
+		function refrescaHorarios() {
+			var idPista = document.getElementById("idPista").value;
+			var fechaReserva = document.getElementById("datefield").value;
+			 			 
+			var url = 'http://localhost:9090/getHorariosDisp/'+fechaReserva+'/'+idPista;
+			fetch(url)             
+			.then(response => response.json())             
+			.then(data => {                 
+				var idHorario = document.getElementById("id_horario");
+                
+                if (data.length == 0) {
+					window.alert('No quedan horarios disponibles para la pista y fecha elegidas');
+				}
+                
+				idHorario.innerHTML = '';
+				for (var i = 0; i < data.length; i++) {		
+					idHorario.innerHTML += '<option value="'+data[i].id+'">'+data[i].hora_inicio.substring(0, 5)+' - '+data[i].hora_fin.substring(0, 5)+'</option>'		
+				}
+			}
+			)             
+            .catch(e => console.log (e))
+		}		           
     </script>
 </body>
 
