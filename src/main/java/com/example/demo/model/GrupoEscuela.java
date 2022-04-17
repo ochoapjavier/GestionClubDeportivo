@@ -9,12 +9,12 @@ import javax.persistence.Id;
 public class GrupoEscuela {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id_grupo;
-	private String deporte;
-	private int id_monitor;
+	private int id;
 	private String id_pista;
-	//private List<Usuario> listaAlumnos;
-	
+	private int id_monitor;
+	private String deporte;
+	private int capacidad;	
+
 	public GrupoEscuela() {
 
 	}
@@ -25,6 +25,22 @@ public class GrupoEscuela {
 		this.id_pista = id_pista;
 	}
 	
+	public int getCapacidad() {
+		return capacidad;
+	}
+
+	public void setCapacidad(int capacidad) {
+		this.capacidad = capacidad;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getDeporte() {
 		return deporte;
 	}

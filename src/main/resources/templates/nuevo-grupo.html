@@ -121,8 +121,8 @@
 			<form th:action="@{/save-grupo-} + ${tipo}" th:object =${grupo} method="POST" >
 				<div class="card">
 					<div class="card-header">										
-						<h3 align="center" th:if="${tipo == 'padel'}">Nuevo Grupo de Pádel</h3>
-						<h3 align="center" th:if="${tipo == 'tenis'}">Nuevo Grupo de Tenis</h3>
+						<h3 align="center" th:if="${tipo == 'padel'}">Nuevo Torneo de Pádel</h3>
+						<h3 align="center" th:if="${tipo == 'tenis'}">Nuevo Torneo de Tenis</h3>
 					</div>
 					<div class="card-body">
 						<div class="form-group">

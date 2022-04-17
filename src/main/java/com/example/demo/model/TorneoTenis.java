@@ -11,7 +11,6 @@ public class TorneoTenis {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String nombre_torneo;
-	private int id_jugador;
 	private String categoria;
 	private int max_jugadores;
 		
@@ -33,14 +32,6 @@ public class TorneoTenis {
 
 	public void setNombre_torneo(String nombre_torneo) {
 		this.nombre_torneo = nombre_torneo;
-	}
-
-	public int getId_jugador() {
-		return id_jugador;
-	}
-
-	public void setId_jugador(int id_jugador) {
-		this.id_jugador = id_jugador;
 	}
 
 	public String getCategoria() {

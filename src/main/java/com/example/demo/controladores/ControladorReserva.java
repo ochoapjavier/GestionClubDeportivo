@@ -36,17 +36,6 @@ public class ControladorReserva {
 		modelo.addAttribute("reserva",reserva);
 		modelo.addAttribute("tipo","tenis");
 		modelo.addAttribute("pistas",pts.listarPistas());
-		/*SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd");
-        Date fechaDate = null;
-        try {
-            fechaDate = formato.parse("2022/03/15");
-        } 
-        catch (ParseException ex) 
-        {
-            System.out.println(ex);
-        }
-		modelo.addAttribute("horarios",hs.listarHorariosByPistaAndFecha("TEN1", fechaDate));
-		//modelo.addAttribute("horarios",hs.listarHorarios());*/
 		return "nueva-reserva";
 	}
 	
@@ -56,13 +45,11 @@ public class ControladorReserva {
 		modelo.addAttribute("reserva",reserva);
 		modelo.addAttribute("tipo","padel");
 		modelo.addAttribute("pistas",pps.listarPistas());
-		//modelo.addAttribute("horarios",hs.listarHorarios());
 		return "nueva-reserva";
 	}
 	
 	@PostMapping ("/save-reserva")
 	public String saveReserva (@Validated ReservaPista reserva, Model modelo) {
-		//modelo.addAttribute("horariosDispo",hs.listarHorariosByPistaAndFecha(reserva.getId_pista(), reserva.getFecha()));
 		rps.saveReserva(reserva);
 		return "dashboard-coordinador";
 	}
