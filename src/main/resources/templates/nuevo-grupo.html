@@ -121,8 +121,8 @@
 			<form th:action="@{/save-grupo-} + ${tipo}" th:object =${grupo} method="POST" >
 				<div class="card">
 					<div class="card-header">										
-						<h3 align="center" th:if="${tipo == 'padel'}">Nuevo Torneo de Pádel</h3>
-						<h3 align="center" th:if="${tipo == 'tenis'}">Nuevo Torneo de Tenis</h3>
+						<h3 align="center" th:if="${tipo == 'padel'}">Nuevo Grupo de Pádel</h3>
+						<h3 align="center" th:if="${tipo == 'tenis'}">Nuevo Grupo de Tenis</h3>
 					</div>
 					<div class="card-body">
 						<div class="form-group">
@@ -135,6 +135,28 @@
 							<label>Pista</label>
 							<select th:field="${grupo.id_pista}">
 							  <option th:each="pista:${pistas}" th:text="${pista.nombre}" th:value="${pista.id_pista}"></option>
+							</select >
+						</div>
+						<div class="form-group">
+							<label>Capacidad del grupo</label>
+							<input th:field="${grupo.capacidad}" type="number">
+						</div>
+						<div class="form-group">
+							<label>Día</label>
+							<select th:field="${grupo.id_dias_grupo}">
+							  <option value="1">Lunes</option>
+							  <option value="2">Martes</option>
+							  <option value="3">Miércoles</option>
+							  <option value="4">Jueves</option>
+							  <option value="5">Viernes</option>
+							  <option value="6">Sábado</option>
+							  <option value="7">Domingo</option>		
+							</select >
+						</div>
+						<div class="form-group">
+							<label>Horarios</label>
+							<select th:field="${grupo.id_horario}">
+							  <option th:each="horario:${horarios}" th:text="${horario.hora_inicio}" th:value="${horario.id}"></option>
 							</select >
 						</div>
 						

@@ -7,10 +7,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.demo.bbdd.RelGrupoAlumnosRepositorio;
 import com.example.demo.model.GrupoEscuela;
 import com.example.demo.model.RelGrupoAlumnos;
 import com.example.demo.servicios.GrupoServicio;
+import com.example.demo.servicios.HorarioServicio;
 import com.example.demo.servicios.PistaPadelServicio;
 import com.example.demo.servicios.PistaTenisServicio;
 import com.example.demo.servicios.RelGrupoAlumnosServicio;
@@ -28,6 +28,8 @@ public class ControladorGrupo {
 	PistaPadelServicio pps;
 	@Autowired
 	RelGrupoAlumnosServicio rgas;
+	@Autowired
+	HorarioServicio hs;
 	
 	@GetMapping({"/nuevo-grupo-tenis","/nuevo-grupo-tenis.html"})
 	public String getNuevoGrupoTenis(Model modelo) {
@@ -36,6 +38,7 @@ public class ControladorGrupo {
 		modelo.addAttribute("tipo","tenis");
 		modelo.addAttribute("monitores",us.listarByRol("Monitor"));
 		modelo.addAttribute("pistas",pts.listarPistas());
+		modelo.addAttribute("horarios",hs.listarHorarios());
 		return "nuevo-grupo";
 	}
 	
@@ -46,6 +49,7 @@ public class ControladorGrupo {
 		modelo.addAttribute("tipo","padel");
 		modelo.addAttribute("monitores",us.listarByRol("Monitor"));
 		modelo.addAttribute("pistas",pps.listarPistas());
+		modelo.addAttribute("horarios",hs.listarHorarios());
 		return "nuevo-grupo";
 	}
 	
