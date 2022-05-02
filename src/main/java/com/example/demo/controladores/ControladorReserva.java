@@ -36,7 +36,6 @@ public class ControladorReserva {
 		modelo.addAttribute("reserva",reserva);
 		modelo.addAttribute("tipo","tenis");
 		modelo.addAttribute("pistas",pts.listarPistas());
-		modelo.addAttribute("horarios",hs.listarHorarios());
 		return "nueva-reserva";
 	}
 	
@@ -46,7 +45,6 @@ public class ControladorReserva {
 		modelo.addAttribute("reserva",reserva);
 		modelo.addAttribute("tipo","padel");
 		modelo.addAttribute("pistas",pps.listarPistas());
-		modelo.addAttribute("horarios",hs.listarHorarios());
 		return "nueva-reserva";
 	}
 	

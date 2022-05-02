@@ -24,4 +24,12 @@ public class GrupoServicio {
 		return false;
 	}
 	
+	public int getInscritosGrupo(int idGrupo) {
+		return gr.getInscritosGrupo(idGrupo);
+	}
+	
+	public int getCapacidadGrupo(int idGrupo) {
+		return gr.getCapacidadGrupoById(idGrupo);
+	}
+	
 }

@@ -16,5 +16,5 @@ public class HorarioServicio {
 	public List<Horario> listarHorarios(){
 		return hr.findAll();
 	}
-		
+			
 }

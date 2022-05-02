@@ -9,7 +9,7 @@
     <meta name="author" content="Javier Ochoa">
     
   
-    <title>Nuevo grupo</title>
+    <title>Nuevo torneo</title>
     <link rel="shortcut icon" type="image/png" href="images/logo.png">
   
     <!-- bootstrap.min css -->
@@ -118,48 +118,24 @@
 <body>
 	<div class="container mt-4">
 		<div class="col-sm-8 mx-auto">
-			<form th:action="@{/save-grupo-} + ${tipo}" th:object =${grupo} method="POST" >
+			<form th:action="@{/save-torneo-tenis}" th:object =${torneo} method="POST" >
 				<div class="card">
 					<div class="card-header">										
-						<h3 align="center" th:if="${tipo == 'padel'}">Nuevo Grupo de Pádel</h3>
-						<h3 align="center" th:if="${tipo == 'tenis'}">Nuevo Grupo de Tenis</h3>
+						<h3 align="center">Nuevo Torneo de Tenis</h3>
 					</div>
 					<div class="card-body">
 						<div class="form-group">
-							<label>Monitor</label>
-							<select th:field="${grupo.id_monitor}">
-							  <option th:each="monitor:${monitores}" th:text="${monitor.nombre} +' '+ ${monitor.apellido1}" th:value="${monitor.id}"></option>
-							</select >
+							<label>Nombre del torneo</label>
+							<input th:field="*{nombre_torneo}" type="text" class="form-control"/>
+						</div>						
+						<div class="form-group">
+							<label>Categoría del torneo</label>
+							<input th:field="*{categoria}" type="text" class="form-control"/>
 						</div>
 						<div class="form-group">
-							<label>Pista</label>
-							<select th:field="${grupo.id_pista}">
-							  <option th:each="pista:${pistas}" th:text="${pista.nombre}" th:value="${pista.id_pista}"></option>
-							</select >
-						</div>
-						<div class="form-group">
-							<label>Capacidad del grupo</label>
-							<input th:field="${grupo.capacidad}" type="number">
-						</div>
-						<div class="form-group">
-							<label>Día</label>
-							<select th:field="${grupo.id_dias_grupo}">
-							  <option value="1">Lunes</option>
-							  <option value="2">Martes</option>
-							  <option value="3">Miércoles</option>
-							  <option value="4">Jueves</option>
-							  <option value="5">Viernes</option>
-							  <option value="6">Sábado</option>
-							  <option value="7">Domingo</option>		
-							</select >
-						</div>
-						<div class="form-group">
-							<label>Horarios</label>
-							<select th:field="${grupo.id_horario}">
-							  <option th:each="horario:${horarios}" th:text="${horario.hora_inicio}" th:value="${horario.id}"></option>
-							</select >
-						</div>
-						
+							<label>Número de jugadores</label>
+							<input th:field="*{max_jugadores}" type="number" class="form-control"/>
+						</div>							
 					</div>
 					<div class="card-footer text-center">
 						<input type="submit" value="Guardar" class="btn btn-success btn-round-full"/>
