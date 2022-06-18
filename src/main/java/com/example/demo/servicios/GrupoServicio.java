@@ -17,6 +17,14 @@ public class GrupoServicio {
 		return gr.findAll();
 	}
 	
+	public List<GrupoEscuela> listarGruposTenis(){
+		return gr.findByDeporte("tenis");
+	}
+	
+	public List<GrupoEscuela> listarGruposPadel(){
+		return gr.findByDeporte("padel");
+	}
+	
 	public Boolean saveGrupo(GrupoEscuela p) {
 		if (!gr.saveAndFlush(p).equals(null)) {
 			return true;

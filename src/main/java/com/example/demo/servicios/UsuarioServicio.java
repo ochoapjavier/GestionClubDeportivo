@@ -18,6 +18,10 @@ public class UsuarioServicio {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
+	public Usuario findById(int id) {
+		return ur.findById(id);
+	}
+	
 	public Boolean tryLogin(String email, String password) {
 		try {
 			//Crea el usuario a partir del email
@@ -25,7 +29,7 @@ public class UsuarioServicio {
 			if (u.getRol().equals("Administrador")) {
 				return true;
 			}
-			//Si la contraseña encriptada coincide devuelve true y si no false
+			//Si la contraseï¿½a encriptada coincide devuelve true y si no false
 			if (bCryptPasswordEncoder.matches(password, u.getPassword())) {
 				return true;
 			}
@@ -72,5 +76,22 @@ public class UsuarioServicio {
 			return true;
 		}
 		return false;
+	}
+	
+	public Boolean actualizarUsuario(Usuario u) {
+		u.setPassword(bCryptPasswordEncoder.encode(u.getPassword()));
+		if (!ur.save(u).equals(null)) {
+			return true;
+		}
+		return false;
+	}
+	
+	public Boolean eliminarUsuario(int id) {		
+		try {
+			ur.deleteById(id);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 }

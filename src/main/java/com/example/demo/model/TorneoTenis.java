@@ -50,4 +50,11 @@ public class TorneoTenis {
 		this.max_jugadores = max_jugadores;
 	}
 
+	@Override
+	public String toString() {
+		return "TorneoTenis [id=" + id + ", nombre_torneo=" + nombre_torneo + ", categoria=" + categoria
+				+ ", max_jugadores=" + max_jugadores + "]";
+	}
+	
+
 }

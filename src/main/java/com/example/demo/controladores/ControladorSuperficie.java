@@ -15,52 +15,51 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.model.Superficie;
 import com.example.demo.model.TorneoTenis;
-import com.example.demo.servicios.TorneoTenisServicio;
+import com.example.demo.servicios.SuperficiesServicio;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping({"/torneos"})
-public class ControladorTorneo {
+@RequestMapping({"/superficies"})
+public class ControladorSuperficie {
 	@Autowired
-	private TorneoTenisServicio tts;
+	private SuperficiesServicio ss;
 	
 	//Método para listar todos los torneos
-	@GetMapping()
-	public List <TorneoTenis> listaTorneos(){
-		List <TorneoTenis> torneos = tts.listarTorneosTenis();
-		return torneos;
+	@GetMapping("/tenis")
+	public List <Superficie> listaSuperficiesTenis(){
+		List <Superficie> superficies = ss.listarSuperficiesDeporte("tenis");
+		return superficies;
 	}
-	 
-	 //Método para listar un torneo a partir de su id
-	@GetMapping("/{id}")
-	public TorneoTenis getTorneo(@PathVariable int id){
-		return tts.findById(id);
+	
+	@GetMapping("/padel")
+	public List <Superficie> listaSuperficiesPadel(){
+		List <Superficie> superficies = ss.listarSuperficiesDeporte("padel");
+		return superficies;
 	}
 	
 	 //Método para añadir un torneo
 	@PostMapping()
-	public TorneoTenis crearTorneo(@Validated @RequestBody TorneoTenis torneo) {
-		tts.saveTorneoTenis(torneo);
-		return torneo;
+	public Superficie crearSuperficie(@Validated @RequestBody Superficie superficie) {
+		ss.saveSuperficie(superficie);
+		return superficie;
     }
 	
 	//Método para actualizar un torneo 
 	@PutMapping()
-	public TorneoTenis actualizarTorneo(@Validated @RequestBody TorneoTenis torneo) {
-		TorneoTenis t = new TorneoTenis();
-		t.setId(torneo.getId());
-		t.setCategoria(torneo.getCategoria());
-		t.setMax_jugadores(torneo.getMax_jugadores());
-		t.setNombre_torneo(torneo.getNombre_torneo());
-		tts.actualizarTorneoTenis(t);
-		return t;
+	public Superficie actualizarSuperficie(@Validated @RequestBody Superficie superficie) {
+		Superficie s = new Superficie();
+		s.setNombre(superficie.getNombre());
+		s.setDeporte(superficie.getDeporte());
+		ss.actualizarSuperficie(s);
+		return s;
     }
 	
 	//Método para borrar un torneo a partir de su id
 	@DeleteMapping("/{id}")
-	public void eliminarTorneo(@PathVariable int id) {
-		tts.eliminarTorneoTenis(id);
+	public void eliminarSuperficie(@PathVariable int id) {
+		ss.eliminarSuperficie(id);
     }
 
 }

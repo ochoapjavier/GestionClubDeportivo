@@ -6,7 +6,8 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.model.TorneoTenis;
 
 @Repository
-public interface TorneoTenisRepositorio extends JpaRepository<TorneoTenis, String> {
-	//public TorneoTenis findByNombre(String nombre);
+public interface TorneoTenisRepositorio extends JpaRepository<TorneoTenis, Integer> {
+	public TorneoTenis findById(int id);
+	
 
 }

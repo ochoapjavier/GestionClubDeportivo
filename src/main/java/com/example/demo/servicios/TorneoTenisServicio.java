@@ -18,10 +18,31 @@ public class TorneoTenisServicio {
 		return ttr.findAll();
 	}
 	
+	public TorneoTenis findById(int id) {
+		return ttr.findById(id);
+	}
+	
 	public Boolean saveTorneoTenis(TorneoTenis t) {
 		if (!ttr.saveAndFlush(t).equals(null)) {
 			return true;
 		}
 		return false;
-	}		
+	}
+	
+	public Boolean actualizarTorneoTenis(TorneoTenis t) {
+		
+		if (!ttr.save(t).equals(null)) {
+			return true;
+		}
+		return false;
+	}
+	
+	public Boolean eliminarTorneoTenis(int id) {		
+		try {
+			ttr.deleteById(id);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
 }

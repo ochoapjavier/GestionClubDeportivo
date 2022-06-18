@@ -80,4 +80,11 @@ public class GrupoEscuela {
 	public void setId_horario(int id_horario) {
 		this.id_horario = id_horario;
 	}
+
+	@Override
+	public String toString() {
+		return "GrupoEscuela [id=" + id + ", id_pista=" + id_pista + ", id_monitor=" + id_monitor + ", deporte="
+				+ deporte + ", capacidad=" + capacidad + ", id_dias_grupo=" + id_dias_grupo + ", id_horario="
+				+ id_horario + "]";
+	}
 }

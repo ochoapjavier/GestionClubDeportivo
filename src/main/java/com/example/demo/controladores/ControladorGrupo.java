@@ -1,14 +1,24 @@
 package com.example.demo.controladores;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.GrupoEscuela;
+import com.example.demo.model.PistaTenis;
 import com.example.demo.model.RelGrupoAlumnos;
+import com.example.demo.model.TorneoTenis;
 import com.example.demo.servicios.GrupoServicio;
 import com.example.demo.servicios.HorarioServicio;
 import com.example.demo.servicios.PistaPadelServicio;
@@ -16,7 +26,9 @@ import com.example.demo.servicios.PistaTenisServicio;
 import com.example.demo.servicios.RelGrupoAlumnosServicio;
 import com.example.demo.servicios.UsuarioServicio;
 
-@Controller
+@CrossOrigin(origins = "http://localhost:4200")
+@RestController
+@RequestMapping({"/grupos"})
 public class ControladorGrupo {
 	@Autowired
 	GrupoServicio gs;
@@ -30,6 +42,33 @@ public class ControladorGrupo {
 	RelGrupoAlumnosServicio rgas;
 	@Autowired
 	HorarioServicio hs;
+	
+	
+	@GetMapping("/tenis")
+	public List <GrupoEscuela> listarGruposTenis(){
+		List <GrupoEscuela> grupos = gs.listarGruposTenis();
+		return grupos;
+	}
+	
+	@GetMapping("/padel")
+	public List <GrupoEscuela> listarGruposPadel(){
+		List <GrupoEscuela> grupos = gs.listarGruposPadel();
+		return grupos;
+	}
+	
+	/*
+	@RequestMapping(value = "/getGruposEscuela", method = RequestMethod.GET)
+	public ResponseEntity<GrupoEscuela> listaTorneos(){
+		List <GrupoEscuela> grupos = gs.listarGrupos();
+		return new ResponseEntity(grupos, HttpStatus.OK);
+	}*/
+	
+	@RequestMapping(value = "/crearGrupo", method = RequestMethod.POST)
+	public ResponseEntity<GrupoEscuela> create(@Validated @RequestBody GrupoEscuela grupo) {
+		gs.saveGrupo(grupo);
+		return new ResponseEntity(grupo.toString(), HttpStatus.CREATED);
+    }
+	
 	
 	@GetMapping({"/nuevo-grupo-tenis","/nuevo-grupo-tenis.html"})
 	public String getNuevoGrupoTenis(Model modelo) {
