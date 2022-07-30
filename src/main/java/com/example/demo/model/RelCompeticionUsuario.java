@@ -11,7 +11,7 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 @Entity
-public class RelGrupoAlumnos {
+public class RelCompeticionUsuario {
 	
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,15 +19,15 @@ public class RelGrupoAlumnos {
 	
 	@OneToOne
 	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "id_grupo", referencedColumnName = "id")
-	private GrupoEscuela id_grupo;
+	@JoinColumn(name = "id_competicion", referencedColumnName = "id")
+	private Competicion id_competicion;
 	
 	@OneToOne
 	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "id_alumno", referencedColumnName = "id_usuario")
-	private Usuario id_alumno;
+	@JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
+	private Usuario id_usuario;
 	
-	public RelGrupoAlumnos() {	
+	public RelCompeticionUsuario() {	
 		
 	}
 
@@ -39,20 +39,21 @@ public class RelGrupoAlumnos {
 		this.id = id;
 	}
 
-	public GrupoEscuela getId_grupo() {
-		return id_grupo;
+	public Competicion getId_competicion() {
+		return id_competicion;
 	}
 
-	public void setId_grupo(GrupoEscuela id_grupo) {
-		this.id_grupo = id_grupo;
+	public void setId_competicion(Competicion id_competicion) {
+		this.id_competicion = id_competicion;
 	}
 
-	public Usuario getId_alumno() {
-		return id_alumno;
+	public Usuario getId_usuario() {
+		return id_usuario;
 	}
 
-	public void setId_alumno(Usuario id_alumno) {
-		this.id_alumno = id_alumno;
+	public void setId_usuario(Usuario id_usuario) {
+		this.id_usuario = id_usuario;
 	}
+
 
 }

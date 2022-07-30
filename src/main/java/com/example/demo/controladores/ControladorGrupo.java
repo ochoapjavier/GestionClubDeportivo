@@ -1,14 +1,27 @@
 package com.example.demo.controladores;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.model.Competicion;
 import com.example.demo.model.GrupoEscuela;
-import com.example.demo.model.RelGrupoAlumnos;
+import com.example.demo.model.PistaTenis;
+import com.example.demo.model.ReservaPista;
+import com.example.demo.model.TorneoTenis;
 import com.example.demo.servicios.GrupoServicio;
 import com.example.demo.servicios.HorarioServicio;
 import com.example.demo.servicios.PistaPadelServicio;
@@ -16,71 +29,48 @@ import com.example.demo.servicios.PistaTenisServicio;
 import com.example.demo.servicios.RelGrupoAlumnosServicio;
 import com.example.demo.servicios.UsuarioServicio;
 
-@Controller
+@CrossOrigin(origins = "http://localhost:4200")
+@RestController
+@RequestMapping({"/grupos"})
 public class ControladorGrupo {
 	@Autowired
 	GrupoServicio gs;
-	@Autowired
-	UsuarioServicio us;
-	@Autowired
-	PistaTenisServicio pts;
-	@Autowired
-	PistaPadelServicio pps;
-	@Autowired
-	RelGrupoAlumnosServicio rgas;
-	@Autowired
-	HorarioServicio hs;
 	
-	@GetMapping({"/nuevo-grupo-tenis","/nuevo-grupo-tenis.html"})
-	public String getNuevoGrupoTenis(Model modelo) {
-		GrupoEscuela grupo = new GrupoEscuela();
-		modelo.addAttribute("grupo",grupo);
-		modelo.addAttribute("tipo","tenis");
-		modelo.addAttribute("monitores",us.listarByRol("Monitor"));
-		modelo.addAttribute("pistas",pts.listarPistas());
-		modelo.addAttribute("horarios",hs.listarHorarios());
-		return "nuevo-grupo";
+	@GetMapping()
+	public List <GrupoEscuela> listarGrupos(){
+		List <GrupoEscuela> grupos = gs.listarGrupos();
+		return grupos;
 	}
 	
-	@GetMapping({"/nuevo-grupo-padel","/nuevo-grupo-padel.html"})
-	public String getNuevoGrupoPadel(Model modelo) {
-		GrupoEscuela grupo = new GrupoEscuela();
-		modelo.addAttribute("grupo",grupo);
-		modelo.addAttribute("tipo","padel");
-		modelo.addAttribute("monitores",us.listarByRol("Monitor"));
-		modelo.addAttribute("pistas",pps.listarPistas());
-		modelo.addAttribute("horarios",hs.listarHorarios());
-		return "nuevo-grupo";
+	@GetMapping("/monitor/{id}")
+	public List <GrupoEscuela> listarGruposByMonitorId(@PathVariable int id){
+		List <GrupoEscuela> grupos = gs.listarGruposByMonitorId(id);
+		return grupos;
 	}
 	
-	@PostMapping ("/save-grupo-tenis")
-	public String saveGrupoTenis (@Validated GrupoEscuela grupo, Model modelo) {
-		grupo.setDeporte("Tenis");
+	@GetMapping("/usuario/{id}")
+	public List <GrupoEscuela> listarGruposByUsuarioId(@PathVariable int id){
+		List <GrupoEscuela> grupos = gs.listarGruposByUsuarioId(id);
+		return grupos;
+	}
+	
+	@GetMapping("/id/{id}")
+	public GrupoEscuela listarGrupoById(@PathVariable int id){
+		GrupoEscuela grupos = gs.listarGrupoById(id);
+		return grupos;
+	}
+	
+	@PostMapping()
+	public GrupoEscuela crearGrupo(@Validated @RequestBody GrupoEscuela grupo) {
 		gs.saveGrupo(grupo);
-		return "dashboard-coordinador";
-	}
+		return grupo;
+    }
 	
-	@PostMapping ("/save-grupo-padel")
-	public String saveGrupoPadel (@Validated GrupoEscuela grupo, Model modelo) {
-		grupo.setDeporte("Padel");
-		gs.saveGrupo(grupo);
-		return "dashboard-coordinador";
-	}
+	@DeleteMapping("/{id}")
+	public GrupoEscuela eliminarCompeticion(@PathVariable int id) {
+		GrupoEscuela g = gs.findById(id);
+		gs.eliminarGrupo(id);
+		return g;
+    }
 	
-	@GetMapping ("/add-alumno-grupo")
-	public String addAlumnoGrupo () {
-		if (gs.getInscritosGrupo(3) < gs.getCapacidadGrupo(3)) {
-			RelGrupoAlumnos rga = new RelGrupoAlumnos();
-			rga.setId_alumno(5);
-			rga.setId_grupo(3);
-			rgas.saveInscripcionGrupo(rga);
-			
-			//si hay menos inscritos que capacidad del grupo
-			//guardar el alumno de ese id en la bbdd
-		}
-		System.out.println("NO Se puede inscribir");
-		//si no devolver error al modelo
-
-		return "dashboard-coordinador";
-	}
 }

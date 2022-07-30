@@ -66,5 +66,11 @@ public class PistaPadel {
 
 	public void setCobertura(String cobertura) {
 		this.cobertura = cobertura;
+	}
+
+	@Override
+	public String toString() {
+		return "PistaPadel [id_pista=" + id_pista + ", nombre=" + nombre + ", superficie=" + superficie + ", tipoPared="
+				+ tipoPared + ", cobertura=" + cobertura + "]";
 	}	
 }

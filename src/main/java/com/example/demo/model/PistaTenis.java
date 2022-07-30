@@ -46,5 +46,10 @@ public class PistaTenis {
 		this.superficie = superficie;
 	}
 
+	@Override
+	public String toString() {
+		return "PistaTenis [id_pista=" + id_pista + ", nombre=" + nombre + ", superficie=" + superficie + "]";
+	}
+
 	
 }
