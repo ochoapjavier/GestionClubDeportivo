@@ -29,8 +29,8 @@ public class ReservaPista {
 	@DateTimeFormat(iso = ISO.DATE)
 	private Date fecha;
 	
-	 @OneToOne
-	 @NotFound(action = NotFoundAction.IGNORE)
+	@OneToOne
+	@NotFound(action = NotFoundAction.IGNORE)
 	@JoinColumn(name = "id_horario", referencedColumnName = "id")
 	private Horario id_horario;
 

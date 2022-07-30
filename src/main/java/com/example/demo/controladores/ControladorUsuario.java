@@ -29,17 +29,26 @@ public class ControladorUsuario {
 	@GetMapping()
 	public List <Usuario> listaUsuarios(){
 		List <Usuario> usuarios = us.listarUsuarios();
+		for (Usuario usuario : usuarios) {
+			usuario.setPassword("");
+		}
 		return usuarios;
 	}
 
 	@GetMapping("/{id}")
 	public Usuario getUsuario(@PathVariable int id){
-		return us.findById(id);
+		Usuario u = us.findById(id);
+		u.setPassword("");
+		return u;
 	}
 	
 	@GetMapping("/rol/{rol}")
 	public List <Usuario> getUsuario(@PathVariable String rol){
-		return us.listarByRol(rol);
+		List <Usuario> usuarios = us.listarByRol(rol);
+		for (Usuario usuario : usuarios) {
+			usuario.setPassword("");
+		}
+		return usuarios;
 	}
 	
 	@PostMapping()
