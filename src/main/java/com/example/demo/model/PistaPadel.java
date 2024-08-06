@@ -2,19 +2,21 @@ package com.example.demo.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
 
 @Entity
 public class PistaPadel {
+	
 	@Id 
 	@Column(name = "id_pista", nullable = false)
 	private String id_pista;
+	
 	private String nombre;
+	
 	private String superficie;
+	
 	private String tipoPared;
+	
 	private String cobertura;
 		
 	public PistaPadel(String nombre, String superficie, String tipoPared, String cobertura) {
@@ -72,5 +74,6 @@ public class PistaPadel {
 	public String toString() {
 		return "PistaPadel [id_pista=" + id_pista + ", nombre=" + nombre + ", superficie=" + superficie + ", tipoPared="
 				+ tipoPared + ", cobertura=" + cobertura + "]";
-	}	
+	}
+	
 }

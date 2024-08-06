@@ -12,6 +12,7 @@ import com.example.demo.model.DiasGrupos;
 
 @Repository
 public class DiasGruposServicio {
+	
 	@Autowired
 	DiasGruposRepositorio dgr;
 	

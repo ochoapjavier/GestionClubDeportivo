@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.NotFound;
@@ -12,10 +13,13 @@ import org.hibernate.annotations.NotFoundAction;
 
 @Entity
 public class Competicion {
+	
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
 	private String nombre_torneo;
+	
 	private String categoria;
 	
 	@OneToOne
@@ -35,6 +39,8 @@ public class Competicion {
 	
 	private int max_jugadores;
 	
+	private long id_fichero;
+
 	public Competicion(String nombre) {
 		this.nombre_torneo = nombre;
 	}
@@ -97,6 +103,14 @@ public class Competicion {
 
 	public void setMax_jugadores(int max_jugadores) {
 		this.max_jugadores = max_jugadores;
+	}
+	
+	public long getId_fichero() {
+		return id_fichero;
+	}
+
+	public void setId_fichero(long id_fichero) {
+		this.id_fichero = id_fichero;
 	}
 
 }

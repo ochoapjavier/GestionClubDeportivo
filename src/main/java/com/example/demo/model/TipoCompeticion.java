@@ -7,9 +7,11 @@ import javax.persistence.Id;
 
 @Entity
 public class TipoCompeticion {
+	
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
 	private String tipo;
 	
 	public TipoCompeticion(String tipo) {

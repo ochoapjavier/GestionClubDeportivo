@@ -2,11 +2,7 @@ package com.example.demo.controladores;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,22 +12,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.example.demo.model.PistaPadel;
 import com.example.demo.model.PistaTenis;
-import com.example.demo.model.TorneoTenis;
 import com.example.demo.servicios.PistaPadelServicio;
 import com.example.demo.servicios.PistaTenisServicio;
-import com.example.demo.servicios.SuperficiesServicio;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping({"/pistas"})
 public class ControladorPista {
+	
 	@Autowired
 	PistaTenisServicio pts;
+	
 	@Autowired
 	PistaPadelServicio pps;
 	
@@ -102,4 +96,5 @@ public class ControladorPista {
 	public void eliminarPistaPadel(@PathVariable String id) {
 		pps.eliminarPistaPadel(id);
     }
+	
 }

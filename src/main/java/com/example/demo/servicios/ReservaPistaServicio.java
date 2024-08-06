@@ -11,6 +11,7 @@ import com.example.demo.model.ReservaPista;
 
 @Repository
 public class ReservaPistaServicio {
+	
 	@Autowired
 	ReservaPistaRepositorio rpr;
 	
@@ -24,6 +25,10 @@ public class ReservaPistaServicio {
 	
 	public ReservaPista findById(int id) {
 		return rpr.findById(id);
+	}
+	
+	public List<ReservaPista> findByIdUsuario(int id_usuario) {
+		return rpr.findByIdUsuario(id_usuario);
 	}
 	
 	public Boolean saveReserva(ReservaPista rp) {

@@ -11,42 +11,37 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.example.demo.model.RelGrupoAlumnos;
-import com.example.demo.servicios.RelGrupoAlumnosServicio;
+import com.example.demo.model.RelSesionReserva;
+import com.example.demo.servicios.RelSesionReservaServicio;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping({"/rel-grupo-alumnos"})
-public class ControladorRelGrupoAlumnos {
+@RequestMapping({"/rel-sesion-reserva"})
+public class ControladorRelSesionReserva {
 	
 	@Autowired
-	private RelGrupoAlumnosServicio rgas;
+	private RelSesionReservaServicio rsrs;
 	
 	@GetMapping()
-	List<RelGrupoAlumnos> listarRelGrupoAlumnos() {
-		return rgas.listarRelGrupoAlumnos();
+	List<RelSesionReserva> listarRelSesionReserva() {
+		return rsrs.listarRelSesionReserva();
 	}
 	
 	@GetMapping("/{id}")
-	public RelGrupoAlumnos getRelGrupoAlumnos(@PathVariable int id){
-		RelGrupoAlumnos rga = rgas.findById(id);
+	public RelSesionReserva getRelGrupoAlumnos(@PathVariable int id){
+		RelSesionReserva rga = rsrs.findById(id);
 		return rga;
-	}
-	
-	@GetMapping("id-grupo/{id}")
-	List<RelGrupoAlumnos> getRelGrupoAlumnosByIdGrupo(@PathVariable int id){
-		return rgas.listarRelGrupoAlumnosByIdGrupo(id);
 	}
 	
 	@PostMapping()
-	public RelGrupoAlumnos crearRelGrupoAlumnos(@Validated @RequestBody RelGrupoAlumnos rga) {
-		rgas.saveInscripcionGrupo(rga);
-		return rga;
+	public RelSesionReserva crearRelSesionReserva(@Validated @RequestBody RelSesionReserva rsr) {
+		rsrs.saveRelSesionReserva(rsr);
+		return rsr;
     }
 
 	@DeleteMapping("{id}")
 	public void eliminarRelGrupoAlumno(@PathVariable int id) {
-		rgas.eliminarRelGrupoAlumnos(id);
+		rsrs.eliminarRelSesionReserva(id);
     }
 	 
 }

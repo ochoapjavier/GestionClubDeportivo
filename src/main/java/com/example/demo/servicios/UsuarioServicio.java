@@ -1,7 +1,5 @@
 package com.example.demo.servicios;
 
-
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +11,10 @@ import com.example.demo.model.Usuario;
 
 @Repository
 public class UsuarioServicio {
+	
 	@Autowired
 	UsuarioRepositorio ur;
+	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
@@ -49,6 +49,10 @@ public class UsuarioServicio {
 	
 	public List<Usuario> listarUsuarios(){
 		return ur.findAll();
+	}
+	
+	public List<Usuario> listarAlumnosParaInscribir(int id_grupo){
+		return ur.findAlumnosParaInscribir(id_grupo);
 	}
 	
 	public List<Usuario> listarByRol(String rol){
@@ -94,4 +98,5 @@ public class UsuarioServicio {
 			return false;
 		}
 	}
+	
 }

@@ -10,6 +10,7 @@ import com.example.demo.model.Deporte;
 
 @Repository
 public class DeporteServicio {
+	
 	@Autowired
 	DeporteRepositorio dr;
 	

@@ -5,13 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.bbdd.DeporteRepositorio;
 import com.example.demo.bbdd.EstadoRepositorio;
-import com.example.demo.model.Deporte;
 import com.example.demo.model.EstadoCompeticiones;
 
 @Repository
 public class EstadoServicio {
+	
 	@Autowired
 	EstadoRepositorio er;
 	

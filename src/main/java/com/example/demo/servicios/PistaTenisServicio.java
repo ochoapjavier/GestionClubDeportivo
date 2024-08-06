@@ -8,10 +8,10 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.bbdd.PistaTenisRepositorio;
 import com.example.demo.model.PistaTenis;
-import com.example.demo.model.TorneoTenis;
 
 @Repository
 public class PistaTenisServicio {
+	
 	@Autowired
 	PistaTenisRepositorio pr;
 	

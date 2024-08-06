@@ -7,9 +7,11 @@ import javax.persistence.Id;
 
 @Entity
 public class DiasGrupos {
+	
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
 	private String dia;
 	
 	public DiasGrupos() {

@@ -6,12 +6,14 @@ import javax.persistence.Id;
 
 @Entity
 public class PistaTenis {
+	
 	@Id
 	@Column(name = "id_pista", nullable = false)
 	private String id_pista;
-	private String nombre;
-	private String superficie;
 	
+	private String nombre;
+	
+	private String superficie;
 	
 	public PistaTenis(String nombre, String superficie) {
 		this.nombre = nombre;
@@ -50,6 +52,5 @@ public class PistaTenis {
 	public String toString() {
 		return "PistaTenis [id_pista=" + id_pista + ", nombre=" + nombre + ", superficie=" + superficie + "]";
 	}
-
 	
 }

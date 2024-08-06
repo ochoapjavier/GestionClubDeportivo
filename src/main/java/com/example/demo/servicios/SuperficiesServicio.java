@@ -7,10 +7,10 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.bbdd.SuperficiesRepositorio;
 import com.example.demo.model.Superficie;
-import com.example.demo.model.TorneoTenis;
 
 @Repository
 public class SuperficiesServicio {
+	
 	@Autowired
 	SuperficiesRepositorio sr;
 	
@@ -45,6 +45,5 @@ public class SuperficiesServicio {
 			return false;
 		}
 	}
-	
 	
 }

@@ -10,6 +10,7 @@ import com.example.demo.model.TipoCompeticion;
 
 @Repository
 public class TipoCompeticionServicio {
+	
 	@Autowired
 	TipoCompeticionRepositorio tcr;
 	

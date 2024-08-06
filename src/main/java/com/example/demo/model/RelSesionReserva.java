@@ -11,7 +11,7 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 @Entity
-public class RelGrupoAlumnos {
+public class RelSesionReserva {
 	
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,15 +19,15 @@ public class RelGrupoAlumnos {
 	
 	@OneToOne
 	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "id_grupo", referencedColumnName = "id")
-	private GrupoEscuela id_grupo;
+	@JoinColumn(name = "id_sesion", referencedColumnName = "id")
+	private Sesion id_sesion;
 	
 	@OneToOne
 	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "id_alumno", referencedColumnName = "id")
-	private Usuario id_alumno;
+	@JoinColumn(name = "id_reserva", referencedColumnName = "id")
+	private ReservaPista id_reserva;
 	
-	public RelGrupoAlumnos() {	
+	public RelSesionReserva() {	
 		
 	}
 
@@ -39,20 +39,20 @@ public class RelGrupoAlumnos {
 		this.id = id;
 	}
 
-	public GrupoEscuela getId_grupo() {
-		return id_grupo;
+	public Sesion getId_sesion() {
+		return id_sesion;
 	}
 
-	public void setId_grupo(GrupoEscuela id_grupo) {
-		this.id_grupo = id_grupo;
+	public void setId_sesion(Sesion id_sesion) {
+		this.id_sesion = id_sesion;
 	}
 
-	public Usuario getId_alumno() {
-		return id_alumno;
+	public ReservaPista getId_reserva() {
+		return id_reserva;
 	}
 
-	public void setId_alumno(Usuario id_alumno) {
-		this.id_alumno = id_alumno;
+	public void setId_reserva(ReservaPista id_reserva) {
+		this.id_reserva = id_reserva;
 	}
 
 }

@@ -11,6 +11,7 @@ import com.example.demo.model.RelCompeticionUsuario;
 
 @Repository
 public class CompeticionServicio {
+	
 	@Autowired
 	CompeticionRepositorio cr;
 	
@@ -46,15 +47,6 @@ public class CompeticionServicio {
 		return cr.findByEstado(1, usuario_id);
 	}
 	
-	/*
-	public List<Competicion> listarCompeticionesEnJuego(){
-		return cr.findByEstado(2);
-	}
-	
-	public List<Competicion> listarCompeticionesFinalizadas(){
-		return cr.findByEstado(3);
-	}
-	*/
 	public Competicion findById(int id) {
 		return cr.findById(id);
 	}
@@ -82,4 +74,5 @@ public class CompeticionServicio {
 			return false;
 		}
 	}
+	
 }

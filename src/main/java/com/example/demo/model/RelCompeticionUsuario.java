@@ -24,7 +24,7 @@ public class RelCompeticionUsuario {
 	
 	@OneToOne
 	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
+	@JoinColumn(name = "id_usuario", referencedColumnName = "id")
 	private Usuario id_usuario;
 	
 	public RelCompeticionUsuario() {	
@@ -54,6 +54,5 @@ public class RelCompeticionUsuario {
 	public void setId_usuario(Usuario id_usuario) {
 		this.id_usuario = id_usuario;
 	}
-
 
 }

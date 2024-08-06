@@ -12,6 +12,7 @@ import org.hibernate.annotations.NotFoundAction;
 
 @Entity
 public class GrupoEscuela {
+	
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;	
@@ -20,7 +21,7 @@ public class GrupoEscuela {
 	
 	@OneToOne
 	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "id_monitor", referencedColumnName = "id_usuario")
+	@JoinColumn(name = "id_monitor", referencedColumnName = "id")
 	private Usuario id_monitor;
 	
 	@OneToOne
@@ -100,5 +101,4 @@ public class GrupoEscuela {
 		this.id_horario = id_horario;
 	}
 
-	
 }

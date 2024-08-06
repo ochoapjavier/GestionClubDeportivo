@@ -7,9 +7,11 @@ import javax.persistence.Id;
 
 @Entity
 public class EstadoCompeticiones {
+	
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
 	private String estado;
 	
 	public EstadoCompeticiones(String nombre) {

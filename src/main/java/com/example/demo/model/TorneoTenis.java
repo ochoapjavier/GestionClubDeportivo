@@ -7,11 +7,15 @@ import javax.persistence.Id;
 
 @Entity
 public class TorneoTenis {
+	
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
 	private String nombre_torneo;
+	
 	private String categoria;
+	
 	private int max_jugadores;
 		
 	public TorneoTenis() {	
@@ -55,6 +59,5 @@ public class TorneoTenis {
 		return "TorneoTenis [id=" + id + ", nombre_torneo=" + nombre_torneo + ", categoria=" + categoria
 				+ ", max_jugadores=" + max_jugadores + "]";
 	}
-	
 
 }

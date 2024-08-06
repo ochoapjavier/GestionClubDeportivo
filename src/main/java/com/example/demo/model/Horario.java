@@ -10,10 +10,13 @@ import javax.persistence.Id;
 
 @Entity
 public class Horario {
+	
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
 	private Time hora_inicio;
+	
 	private Time hora_fin;
 	
 	public Horario(Time hora_inicio, Time hora_fin) {

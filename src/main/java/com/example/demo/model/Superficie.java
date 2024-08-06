@@ -7,10 +7,13 @@ import javax.persistence.Id;
 
 @Entity
 public class Superficie {
+	
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
 	private String nombre;
+	
 	private String deporte;
 	
 	public Superficie(String nombre) {

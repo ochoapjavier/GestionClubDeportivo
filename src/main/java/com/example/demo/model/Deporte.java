@@ -7,9 +7,11 @@ import javax.persistence.Id;
 
 @Entity
 public class Deporte {
+	
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
 	private String nombre;
 	
 	public Deporte(String nombre) {

@@ -1,10 +1,7 @@
 package com.example.demo.controladores;
 
-
 import java.time.LocalDate;
 import java.util.List;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,22 +13,16 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.example.demo.model.ReservaPista;
-import com.example.demo.servicios.GrupoServicio;
-import com.example.demo.servicios.HorarioServicio;
-import com.example.demo.servicios.PistaPadelServicio;
-import com.example.demo.servicios.PistaTenisServicio;
 import com.example.demo.servicios.ReservaPistaServicio;
-import com.example.demo.servicios.UsuarioServicio;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping({"/reservas"})
 public class ControladorReserva {
+	
 	@Autowired
 	ReservaPistaServicio rps;
-	
 	
 	@GetMapping()
 	public List <ReservaPista> listaReservas(){
@@ -55,6 +46,11 @@ public class ControladorReserva {
 		 LocalDate conver = LocalDate.parse(fecha);
 		 return rps.listarReservaIdFecha(id, conver);
 	}
+	
+	@GetMapping("idUsuario/{id_usuario}")
+	public List<ReservaPista> getReservaByIdUsuario(@PathVariable int id_usuario){
+		return rps.findByIdUsuario(id_usuario);
+	}
 	 
 	@PostMapping()
 	public ReservaPista crearReserva(@Validated @RequestBody ReservaPista rp) {
@@ -66,9 +62,10 @@ public class ControladorReserva {
 	public ReservaPista actualizarReserva(@Validated @RequestBody ReservaPista reserva) {
 		ReservaPista rp = new ReservaPista();
 		rp.setId(reserva.getId());
-		rp.setFecha(reserva.getFecha());
-		rp.setHorario(reserva.getHorario());
 		rp.setId_pista(reserva.getId_pista());
+		rp.setFecha(reserva.getFecha());
+		rp.setId_horario(reserva.getId_horario());
+		rp.setId_usuario(reserva.getId_usuario());
 		rps.actualizarReserva(rp);
 		return rp;
     }
@@ -78,30 +75,4 @@ public class ControladorReserva {
 		rps.eliminarReserva(id);
     }
 	
-	
-	/*
-	@GetMapping({"/nueva-reserva-tenis","/nueva-reserva-tenis.html"})
-	public String getNuevaReservaTenis(Model modelo) {
-		ReservaPista reserva = new ReservaPista();
-		modelo.addAttribute("reserva",reserva);
-		modelo.addAttribute("tipo","tenis");
-		modelo.addAttribute("pistas",pts.listarPistas());
-		return "nueva-reserva";
-	}
-	
-	@GetMapping({"/nueva-reserva-padel","/nueva-reserva-padel.html"})
-	public String getNuevaReservaPadel(Model modelo) {
-		ReservaPista reserva = new ReservaPista();
-		modelo.addAttribute("reserva",reserva);
-		modelo.addAttribute("tipo","padel");
-		modelo.addAttribute("pistas",pps.listarPistas());
-		return "nueva-reserva";
-	}
-	
-	@PostMapping ("/save-reserva")
-	public String saveReserva (@Validated ReservaPista reserva, Model modelo) {
-		rps.saveReserva(reserva);
-		return "dashboard-coordinador";
-	}
-	 */
 }

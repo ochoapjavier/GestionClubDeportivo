@@ -7,10 +7,10 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.bbdd.RelCompeticionUsuarioRepositorio;
 import com.example.demo.model.RelCompeticionUsuario;
-import com.example.demo.model.ReservaPista;
 
 @Repository
 public class RelCompeticionUsuarioServicio {
+	
 	@Autowired
 	RelCompeticionUsuarioRepositorio rcur;
 	
@@ -28,6 +28,5 @@ public class RelCompeticionUsuarioServicio {
 		}
 		return false;
 	}
-	
 		
 }

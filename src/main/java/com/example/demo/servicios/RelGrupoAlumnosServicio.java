@@ -11,6 +11,7 @@ import com.example.demo.model.RelGrupoAlumnos;
 
 @Repository
 public class RelGrupoAlumnosServicio {
+	
 	@Autowired
 	RelGrupoAlumnosRepositorio rgar;
 	
@@ -32,4 +33,14 @@ public class RelGrupoAlumnosServicio {
 	public RelGrupoAlumnos findById(int id) {
 		return rgar.findById(id);
 	}
+	
+	public Boolean eliminarRelGrupoAlumnos(int id) {		
+		try {
+			rgar.deleteById(id);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	
 }

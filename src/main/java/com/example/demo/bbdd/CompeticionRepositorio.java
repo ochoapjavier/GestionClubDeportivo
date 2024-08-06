@@ -6,10 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
 import com.example.demo.model.Competicion;
-import com.example.demo.model.RelCompeticionUsuario;
-
 
 @Repository
 public interface CompeticionRepositorio extends JpaRepository<Competicion, Integer> {
@@ -45,8 +42,5 @@ public interface CompeticionRepositorio extends JpaRepository<Competicion, Integ
 			+ "WHERE C.tipo_competicion_id = 2\r\n"
 			+ "AND RLC.id_usuario = :id_usuario",nativeQuery = true)
 	public List<Competicion> listaRankingByUsuarioID(@Param("id_usuario") int id_usuario);
-	
-	
-	
 
 }

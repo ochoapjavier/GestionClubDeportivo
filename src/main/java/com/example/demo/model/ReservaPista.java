@@ -21,10 +21,13 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Entity
 public class ReservaPista {
+	
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
 	private String id_pista;
+	
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(iso = ISO.DATE)
 	private Date fecha;
@@ -33,13 +36,16 @@ public class ReservaPista {
 	@NotFound(action = NotFoundAction.IGNORE)
 	@JoinColumn(name = "id_horario", referencedColumnName = "id")
 	private Horario id_horario;
-
+	
+	@OneToOne
+	@NotFound(action = NotFoundAction.IGNORE)
+	@JoinColumn(name = "id_usuario", referencedColumnName = "id")
+	private Usuario id_usuario;
+	
 	public ReservaPista() {
 
 	}
 	
-
-
 	public int getId() {
 		return id;
 	}
@@ -64,13 +70,20 @@ public class ReservaPista {
 		this.fecha = fecha;
 	}
 
-	public Horario getHorario() {
-		return this.id_horario;
+	public Horario getId_horario() {
+		return id_horario;
 	}
 
-	public void setHorario(Horario horarios) {
-		this.id_horario = horarios;
+	public void setId_horario(Horario id_horario) {
+		this.id_horario = id_horario;
 	}
 
-	
+	public Usuario getId_usuario() {
+		return id_usuario;
+	}
+
+	public void setId_usuario(Usuario id_usuario) {
+		this.id_usuario = id_usuario;
+	}
+
 }

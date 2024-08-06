@@ -1,8 +1,6 @@
 package com.example.demo.controladores;
 
-
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.example.demo.model.Usuario;
 import com.example.demo.servicios.UsuarioServicio;
 
@@ -40,6 +37,12 @@ public class ControladorUsuario {
 		Usuario u = us.findById(id);
 		u.setPassword("");
 		return u;
+	}
+	
+	@GetMapping("/inscribir/{id_grupo}")
+	public List <Usuario> getAlumnosParaInscribir(@PathVariable int id_grupo){
+		List <Usuario> usuarios = us.listarAlumnosParaInscribir(id_grupo);
+		return usuarios;
 	}
 	
 	@GetMapping("/rol/{rol}")
@@ -70,6 +73,7 @@ public class ControladorUsuario {
 		u.setTerminos(usuario.getTerminos());
 		u.setComercial(usuario.getComercial());
 		u.setPassword(usuario.getPassword());
+		u.setId_fichero(usuario.getId_fichero());
 		us.actualizarUsuario(u);
 		return u;
     }
@@ -86,4 +90,5 @@ public class ControladorUsuario {
 		}
 		return usuario;
 	}
+	
 }
