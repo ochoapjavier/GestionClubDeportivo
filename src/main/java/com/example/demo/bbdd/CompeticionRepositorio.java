@@ -19,7 +19,7 @@ public interface CompeticionRepositorio extends JpaRepository<Competicion, Integ
 	public List<Competicion> findByDeporte(@Param("deporte_id") int deporte_id);
 	
 	@Query(value="SELECT * \r\n"
-			+ "FROM COMPETICION \r\n"
+			+ "FROM competicion \r\n"
 			+ "WHERE ID NOT IN (\r\n"
 			+ "	SELECT ID_COMPETICION \r\n"
 			+ "  	FROM rel_competicion_usuario\r\n"
