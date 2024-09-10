@@ -2,6 +2,9 @@ package com.example.demo.controladores;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,13 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.Usuario;
 import com.example.demo.servicios.UsuarioServicio;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "${frontend.url}")
 @RestController
 @RequestMapping({"/usuarios"})
 public class ControladorUsuario {
 	
 	@Autowired
 	UsuarioServicio us;
+	
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@GetMapping()
 	public List <Usuario> listaUsuarios(){
@@ -55,28 +60,20 @@ public class ControladorUsuario {
 	}
 	
 	@PostMapping()
-	public Usuario crearUsuario(@Validated @RequestBody Usuario usuario) {
-		us.saveUsuario(usuario);
-		return usuario;
-    }
-	
+	public ResponseEntity<Usuario> crearUsuario(@Validated @RequestBody Usuario usuario) {
+	    if (us.saveUsuario(usuario)) {
+	        // Asegúrate de devolver un objeto usuario con el id incluido
+	        return new ResponseEntity<>(usuario, HttpStatus.CREATED);
+	    } else {
+	        return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+	    }
+	}
 	@PutMapping()
 	public Usuario actualizarUsuario(@Validated @RequestBody Usuario usuario) {
-		Usuario u = new Usuario();
-		u.setId(usuario.getId());
-		u.setEmail(usuario.getEmail());
-		u.setNombre(usuario.getNombre());
-		u.setApellido1(usuario.getApellido1());
-		u.setApellido2(usuario.getApellido2());
-		u.setRol(usuario.getRol());
-		u.setPrivacidad(usuario.getPrivacidad());
-		u.setTerminos(usuario.getTerminos());
-		u.setComercial(usuario.getComercial());
-		u.setPassword(usuario.getPassword());
-		u.setId_fichero(usuario.getId_fichero());
-		us.actualizarUsuario(u);
-		return u;
-    }
+
+	    us.actualizarUsuario(usuario); // Llama al servicio para guardar
+	    return usuario; // Devuelve el usuario actualizado
+	}
 	
 	@DeleteMapping("/{id}")
 	public void eliminarUsuario(@PathVariable int id) {

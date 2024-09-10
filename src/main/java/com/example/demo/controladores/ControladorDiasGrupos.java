@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.DiasGrupos;
 import com.example.demo.servicios.DiasGruposServicio;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "${frontend.url}")
 @RestController
 @RequestMapping({"/dias-grupos"})
 public class ControladorDiasGrupos {

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.Sesion;
 import com.example.demo.servicios.SesionServicio;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "${frontend.url}")
 @RestController
 @RequestMapping({"/sesion"})
 public class ControladorSesion {

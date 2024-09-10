@@ -18,7 +18,7 @@ import com.example.demo.model.PistaTenis;
 import com.example.demo.servicios.PistaPadelServicio;
 import com.example.demo.servicios.PistaTenisServicio;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "${frontend.url}")
 @RestController
 @RequestMapping({"/pistas"})
 public class ControladorPista {

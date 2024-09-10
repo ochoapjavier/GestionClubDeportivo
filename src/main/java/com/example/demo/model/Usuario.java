@@ -14,10 +14,10 @@ public class Usuario {
 	private int id;
 	
 	private String email;
-	private String password;
 	private String nombre;
 	private String apellido1;
 	private String apellido2;
+	private String password;
 	private String rol;
 	private int terminos;
 	private int privacidad;

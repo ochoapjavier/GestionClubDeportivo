@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.Superficie;
 import com.example.demo.servicios.SuperficiesServicio;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "${frontend.url}")
 @RestController
 @RequestMapping({"/superficies"})
 public class ControladorSuperficie {

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.RelGrupoAlumnos;
 import com.example.demo.servicios.RelGrupoAlumnosServicio;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "${frontend.url}")
 @RestController
 @RequestMapping({"/rel-grupo-alumnos"})
 public class ControladorRelGrupoAlumnos {

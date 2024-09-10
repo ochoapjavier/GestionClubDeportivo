@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.Deporte;
 import com.example.demo.servicios.DeporteServicio;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "${frontend.url}")
 @RestController
 @RequestMapping({"/deportes"})
 public class ControladorDeporte {

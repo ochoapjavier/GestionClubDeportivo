@@ -75,20 +75,48 @@ public class UsuarioServicio {
 	}
 	
 	public Boolean saveUsuario(Usuario u) {
-		u.setPassword(bCryptPasswordEncoder.encode(u.getPassword()));
-		if (!ur.saveAndFlush(u).equals(null)) {
-			return true;
-		}
-		return false;
+	    try {
+	        u.setPassword(bCryptPasswordEncoder.encode(u.getPassword()));
+	        ur.saveAndFlush(u);
+	        return true;
+	    } catch (Exception e) {
+	        return false;
+	    }
 	}
 	
 	public Boolean actualizarUsuario(Usuario u) {
-		u.setPassword(bCryptPasswordEncoder.encode(u.getPassword()));
-		if (!ur.save(u).equals(null)) {
-			return true;
-		}
-		return false;
+	    // Busca el usuario existente por ID
+	    Usuario usuarioExistente = ur.findById(u.getId());
+
+	    if (usuarioExistente == null) {
+	        return false; // Usuario no encontrado
+	    }
+
+	    // Solo encripta la contraseña si se proporciona una nueva
+	    if (u.getPassword() != null && !u.getPassword().isEmpty()) {
+	        usuarioExistente.setPassword(bCryptPasswordEncoder.encode(u.getPassword()));
+	    } else {
+	        // Mantiene la contraseña actual si no se proporciona una nueva
+	        usuarioExistente.setPassword(usuarioExistente.getPassword());
+	    }
+
+	    // Actualiza otros campos
+	    usuarioExistente.setEmail(u.getEmail());
+	    usuarioExistente.setNombre(u.getNombre());
+	    usuarioExistente.setApellido1(u.getApellido1());
+	    usuarioExistente.setApellido2(u.getApellido2());
+	    usuarioExistente.setRol(u.getRol());
+	    usuarioExistente.setPrivacidad(u.getPrivacidad());
+	    usuarioExistente.setTerminos(u.getTerminos());
+	    usuarioExistente.setComercial(u.getComercial());
+	    usuarioExistente.setId_fichero(u.getId_fichero());
+
+	    // Guarda el usuario actualizado
+	    ur.save(usuarioExistente);
+
+	    return true; // Retorna true si la actualización fue exitosa
 	}
+
 	
 	public Boolean eliminarUsuario(int id) {		
 		try {
