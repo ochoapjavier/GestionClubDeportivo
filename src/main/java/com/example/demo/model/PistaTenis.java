@@ -3,6 +3,13 @@ package com.example.demo.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 public class PistaTenis {
@@ -13,11 +20,15 @@ public class PistaTenis {
 	
 	private String nombre;
 	
-	private String superficie;
+	@OneToOne
+	@NotFound(action = NotFoundAction.IGNORE)
+	@JoinColumn(name = "id_superficie", referencedColumnName = "id")
+	private Superficie id_superficie;
 	
-	public PistaTenis(String nombre, String superficie) {
+	
+	public PistaTenis(String nombre, Superficie id_superficie) {
 		this.nombre = nombre;
-		this.superficie = superficie;
+		this.id_superficie = id_superficie;
 	}
 	
 	public PistaTenis() {	
@@ -40,17 +51,17 @@ public class PistaTenis {
 		this.nombre = nombre;
 	}
 
-	public String getSuperficie() {
-		return superficie;
+	public Superficie getId_superficie() {
+		return id_superficie;
 	}
 
-	public void setSuperficie(String superficie) {
-		this.superficie = superficie;
+	public void setId_superficie(Superficie superficie) {
+		this.id_superficie = superficie;
 	}
 
 	@Override
 	public String toString() {
-		return "PistaTenis [id_pista=" + id_pista + ", nombre=" + nombre + ", superficie=" + superficie + "]";
+		return "PistaTenis [id_pista=" + id_pista + ", nombre=" + nombre + ", superficie=" + id_superficie + "]";
 	}
 	
 }

@@ -38,13 +38,13 @@ public class ReservaPistaServicio {
 		return false;
 	}
 	
-	public Boolean actualizarReserva(ReservaPista rp) {
-		
-		if (!rpr.save(rp).equals(null)) {
-			return true;
-		}
-		return false;
-	}
+	public ReservaPista actualizarReserva(ReservaPista rp) {
+        if (rpr.existsById(rp.getId())) {
+            return rpr.saveAndFlush(rp);
+        } else {
+            throw new RuntimeException("No se puede actualizar, el registro no existe.");
+        }
+    }
 	
 	public Boolean eliminarReserva(int id) {		
 		try {

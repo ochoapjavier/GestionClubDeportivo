@@ -10,7 +10,7 @@ public class Superficie {
 	
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int id;	
 	
 	private String nombre;
 	
@@ -22,6 +22,14 @@ public class Superficie {
 	
 	public Superficie() {	
 		
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getNombre() {
