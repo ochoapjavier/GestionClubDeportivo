@@ -1,10 +1,11 @@
 package com.example.demo.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 public class Usuario {
@@ -13,11 +14,14 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
+	@Column(unique = true)
 	private String email;
 	private String nombre;
 	private String apellido1;
 	private String apellido2;
-	private String password;
+
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String password;
 	private String rol;
 	private int terminos;
 	private int privacidad;

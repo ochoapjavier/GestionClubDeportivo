@@ -76,7 +76,7 @@ public class ControladorPista {
 	}
 	
 	@PutMapping("/padel")
-	public PistaPadel actualizarPistaTenis(@Validated @RequestBody PistaPadel pista) {
+	public PistaPadel actualizarPistaPadel(@Validated @RequestBody PistaPadel pista) {
 		PistaPadel p = new PistaPadel();
 		p.setId_pista(pista.getId_pista());
 		p.setNombre(pista.getNombre());

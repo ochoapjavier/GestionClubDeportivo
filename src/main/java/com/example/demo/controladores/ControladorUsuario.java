@@ -15,8 +15,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.example.demo.excepciones.ResourceNotFoundException;
 import com.example.demo.model.Usuario;
 import com.example.demo.servicios.UsuarioServicio;
+import org.springframework.dao.DataIntegrityViolationException;
+import java.util.Map;
+import java.util.Collections;
+
 
 @CrossOrigin(origins = "${frontend.url}")
 @RestController
@@ -25,8 +30,9 @@ public class ControladorUsuario {
 	
 	@Autowired
 	UsuarioServicio us;
-	
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+    
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@GetMapping()
 	public List <Usuario> listaUsuarios(){
@@ -40,6 +46,9 @@ public class ControladorUsuario {
 	@GetMapping("/{id}")
 	public Usuario getUsuario(@PathVariable int id){
 		Usuario u = us.findById(id);
+		if (u == null) {
+			throw new ResourceNotFoundException();
+		}
 		u.setPassword("");
 		return u;
 	}
@@ -60,14 +69,24 @@ public class ControladorUsuario {
 	}
 	
 	@PostMapping()
-	public ResponseEntity<Usuario> crearUsuario(@Validated @RequestBody Usuario usuario) {
-	    if (us.saveUsuario(usuario)) {
-	        // Asegúrate de devolver un objeto usuario con el id incluido
-	        return new ResponseEntity<>(usuario, HttpStatus.CREATED);
-	    } else {
-	        return new ResponseEntity<>(null, HttpStatus.CONFLICT);
-	    }
-	}
+    public ResponseEntity<?> crearUsuario(@Validated @RequestBody Usuario usuario) {
+        try {
+            Usuario nuevoUsuario = us.saveUsuario(usuario);
+            return new ResponseEntity<Usuario>(nuevoUsuario, HttpStatus.CREATED);
+        } catch (DataIntegrityViolationException e) {
+            // Esta excepción se lanzará si hay una restricción de unicidad en la base de datos (ej. email)
+            // y se intenta insertar un valor duplicado.
+            Map<String, String> errorResponse = Collections.singletonMap("message", "El email ya está en uso.");
+            return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+        } catch (IllegalArgumentException e) { // Capturar la nueva excepción para contraseña nula/vacía
+            Map<String, String> errorResponse = Collections.singletonMap("message", e.getMessage());
+            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST); // O 400 Bad Request
+        } catch (Exception e) {
+            // Captura cualquier otra excepción no esperada para devolver 500
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 	@PutMapping()
 	public Usuario actualizarUsuario(@Validated @RequestBody Usuario usuario) {
 
