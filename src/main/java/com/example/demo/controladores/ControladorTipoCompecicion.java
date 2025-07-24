@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.TipoCompeticion;
 import com.example.demo.servicios.TipoCompeticionServicio;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "${frontend.url}")
 @RestController
 @RequestMapping({"/tipo-competicion"})
 public class ControladorTipoCompecicion {

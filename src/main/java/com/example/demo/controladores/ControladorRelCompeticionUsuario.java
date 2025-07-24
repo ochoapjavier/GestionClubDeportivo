@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.RelCompeticionUsuario;
 import com.example.demo.servicios.RelCompeticionUsuarioServicio;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "${frontend.url}")
 @RestController
 @RequestMapping({"/rel-competicion-usuario"})
 public class ControladorRelCompeticionUsuario {

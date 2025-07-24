@@ -18,13 +18,13 @@ public interface SesionRepositorio extends JpaRepository<Sesion, Integer> {
 	@Query(value="SELECT S.* FROM `sesion` AS S INNER JOIN rel_grupo_alumnos AS RGA ON S.ID_GRUPO = RGA.ID_GRUPO WHERE ID_ALUMNO = :id_usuario AND FECHA >= CURDATE()",nativeQuery = true)
 	public List<Sesion> listarSesionesFuturasByUserID(@Param("id_usuario") int id_usuario);
 
-	@Query(value="SELECT S.* FROM SESION AS S INNER JOIN grupo_escuela AS GE ON S.id_grupo = GE.id WHERE GE.id_monitor = :id_monitor",nativeQuery = true)
+	@Query(value="SELECT S.* FROM `sesion` AS S INNER JOIN grupo_escuela AS GE ON S.id_grupo = GE.id WHERE GE.id_monitor = :id_monitor",nativeQuery = true)
 	public List<Sesion> listarSesionesByMonitorID(@Param("id_monitor") int id_monitor);
 	
-	@Query(value="SELECT S.* FROM SESION AS S INNER JOIN grupo_escuela AS GE ON S.id_grupo = GE.id WHERE GE.id_monitor = :id_monitor AND FECHA >= CURDATE()",nativeQuery = true)
+	@Query(value="SELECT S.* FROM `sesion` AS S INNER JOIN grupo_escuela AS GE ON S.id_grupo = GE.id WHERE GE.id_monitor = :id_monitor AND FECHA >= CURDATE()",nativeQuery = true)
 	public List<Sesion> listarSesionesFuturasByMonitorID(@Param("id_monitor") int id_monitor);
 	
-	@Query(value="SELECT S.* FROM SESION AS S INNER JOIN grupo_escuela AS GE ON S.id_grupo = GE.id WHERE GE.id_monitor = :id_monitor AND S.id_grupo = :id_grupo AND S.fecha = :fecha",nativeQuery = true)
+	@Query(value="SELECT S.* FROM `sesion` AS S INNER JOIN grupo_escuela AS GE ON S.id_grupo = GE.id WHERE GE.id_monitor = :id_monitor AND S.id_grupo = :id_grupo AND S.fecha = :fecha",nativeQuery = true)
 	public Sesion getSesionByGrupoYFecha(@Param("id_monitor") int id_monitor, @Param("id_grupo") int id_grupo, @Param("fecha") LocalDate date);
 }
 

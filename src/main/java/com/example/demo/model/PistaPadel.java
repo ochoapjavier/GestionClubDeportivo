@@ -3,6 +3,11 @@ package com.example.demo.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 @Entity
 public class PistaPadel {
@@ -13,15 +18,18 @@ public class PistaPadel {
 	
 	private String nombre;
 	
-	private String superficie;
+	@OneToOne
+	@NotFound(action = NotFoundAction.IGNORE)
+	@JoinColumn(name = "id_superficie", referencedColumnName = "id")
+	private Superficie id_superficie;
 	
 	private String tipoPared;
 	
 	private String cobertura;
 		
-	public PistaPadel(String nombre, String superficie, String tipoPared, String cobertura) {
+	public PistaPadel(String nombre, Superficie id_superficie, String tipoPared, String cobertura) {
 		this.nombre = nombre;
-		this.superficie = superficie;
+		this.id_superficie = id_superficie;
 		this.tipoPared = tipoPared;
 		this.cobertura = cobertura;	
 	}
@@ -46,12 +54,12 @@ public class PistaPadel {
 		this.nombre = nombre;
 	}
 
-	public String getSuperficie() {
-		return superficie;
+	public Superficie getId_superficie() {
+		return id_superficie;
 	}
 
-	public void setSuperficie(String superficie) {
-		this.superficie = superficie;
+	public void setId_superficie(Superficie superficie) {
+		this.id_superficie = superficie;
 	}
 
 	public String getTipoPared() {
@@ -72,7 +80,7 @@ public class PistaPadel {
 
 	@Override
 	public String toString() {
-		return "PistaPadel [id_pista=" + id_pista + ", nombre=" + nombre + ", superficie=" + superficie + ", tipoPared="
+		return "PistaPadel [id_pista=" + id_pista + ", nombre=" + nombre + ", superficie=" + id_superficie + ", tipoPared="
 				+ tipoPared + ", cobertura=" + cobertura + "]";
 	}
 	

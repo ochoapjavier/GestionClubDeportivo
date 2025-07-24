@@ -20,7 +20,7 @@ import com.example.demo.model.Fichero;
 import com.example.demo.model.UploadFileResponse;
 import com.example.demo.servicios.FicheroServicio;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "${frontend.url}")
 @RestController
 @RequestMapping({"/fichero"})
 public class ControladorFichero {

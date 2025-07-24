@@ -16,7 +16,7 @@ public interface ReservaPistaRepositorio extends JpaRepository<ReservaPista, Int
 	@Query(value="SELECT * FROM reserva_pista WHERE FECHA = :fecha",nativeQuery = true)
 	public List<ReservaPista> findByFecha(@Param("fecha") LocalDate fecha);
 	
-	@Query(value="SELECT * FROM ( SELECT RP.* FROM reserva_pista RP INNER JOIN HORARIO H ON RP.id_horario = H.id ) AS T WHERE ID_PISTA = :idPista AND FECHA = :fecha",nativeQuery = true)
+	@Query(value="SELECT * FROM ( SELECT RP.* FROM reserva_pista RP INNER JOIN horario H ON RP.id_horario = H.id ) AS T WHERE ID_PISTA = :idPista AND FECHA = :fecha",nativeQuery = true)
 	public List<ReservaPista> listaPistasByIdFecha(@Param("idPista") String idPista, @Param("fecha") LocalDate fecha);
 	
 	@Query(value="SELECT * FROM reserva_pista WHERE ID_USUARIO = :id_usuario",nativeQuery = true)

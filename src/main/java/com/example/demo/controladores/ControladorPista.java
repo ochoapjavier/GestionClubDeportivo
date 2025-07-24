@@ -18,7 +18,7 @@ import com.example.demo.model.PistaTenis;
 import com.example.demo.servicios.PistaPadelServicio;
 import com.example.demo.servicios.PistaTenisServicio;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "${frontend.url}")
 @RestController
 @RequestMapping({"/pistas"})
 public class ControladorPista {
@@ -70,7 +70,7 @@ public class ControladorPista {
 		PistaTenis p = new PistaTenis();
 		p.setId_pista(pista.getId_pista());
 		p.setNombre(pista.getNombre());
-		p.setSuperficie(pista.getSuperficie());
+		p.setId_superficie(pista.getId_superficie());
 		pts.actualizarPistaTenis(p);
 		return p;
 	}
@@ -80,7 +80,7 @@ public class ControladorPista {
 		PistaPadel p = new PistaPadel();
 		p.setId_pista(pista.getId_pista());
 		p.setNombre(pista.getNombre());
-		p.setSuperficie(pista.getSuperficie());
+		p.setId_superficie(pista.getId_superficie());
 		p.setCobertura(pista.getCobertura());
 		p.setTipoPared(pista.getTipoPared());
 		pps.actualizarPistaPadel(p);

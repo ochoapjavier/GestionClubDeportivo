@@ -53,13 +53,15 @@ public class SesionServicio {
 		return false;
 	}
 	
-	public Boolean actualizarSesion(Sesion sesion) {
-		
-		if (!ss.save(sesion).equals(null)) {
-			return true;
-		}
-		return false;
-	}
+	public Sesion actualizarSesion(Sesion sesion) {
+        // Verifica si el ID es válido
+        if (sesion.getId() != 0 && ss.existsById(sesion.getId())) {
+            // Guarda el objeto, si el ID existe en la base de datos se actualizará, si no se creará un nuevo registro
+            return ss.save(sesion);
+        } else {
+            throw new RuntimeException("No se puede actualizar, el registro no existe.");
+        }
+    }
 
 	public Boolean eliminarSesion(int id) {		
 		try {
