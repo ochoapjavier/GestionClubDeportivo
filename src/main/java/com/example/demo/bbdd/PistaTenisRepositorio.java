@@ -9,5 +9,4 @@ import com.example.demo.model.PistaTenis;
 public interface PistaTenisRepositorio extends JpaRepository<PistaTenis, String> {
 	public PistaTenis findByNombre(String nombre);
 	public Optional<PistaTenis> findById(String id);
-
 }

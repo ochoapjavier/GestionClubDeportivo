@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
-
+import org.springframework.dao.DataIntegrityViolationException;
 import com.example.demo.bbdd.UsuarioRepositorio;
 import com.example.demo.model.Usuario;
 
@@ -64,25 +64,25 @@ public class UsuarioServicio {
 		return u;	
 	}
 	
-	public int save(Usuario u) {
-		int res = 0;
-		u.setPassword(bCryptPasswordEncoder.encode(u.getPassword()));
-		Usuario usuario = ur.save(u);
-		if (!usuario.equals(null)) {
-			res =1;
-		}
-		return 0;
-	}
-	
-	public Boolean saveUsuario(Usuario u) {
-	    try {
-	        u.setPassword(bCryptPasswordEncoder.encode(u.getPassword()));
-	        ur.saveAndFlush(u);
-	        return true;
-	    } catch (Exception e) {
-	        return false;
-	    }
-	}
+	public Usuario saveUsuario(Usuario u) {
+        try {
+            if (u.getPassword() == null || u.getPassword().trim().isEmpty()) {
+                throw new IllegalArgumentException("La contraseña no puede ser nula o vacía.");
+            }
+
+            String encodedPassword = bCryptPasswordEncoder.encode(u.getPassword().trim());
+            u.setPassword(encodedPassword);
+
+            Usuario savedUser = ur.saveAndFlush(u);
+
+            if (savedUser == null) {
+                 throw new IllegalStateException("Fallo al guardar el usuario en la base de datos.");
+            }
+            return savedUser;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
 	
 	public Boolean actualizarUsuario(Usuario u) {
 	    // Busca el usuario existente por ID
