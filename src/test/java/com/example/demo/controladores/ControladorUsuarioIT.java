@@ -134,11 +134,11 @@ public class ControladorUsuarioIT {
         nuevoUsuarioMap.put("comercial", 0);
         nuevoUsuarioMap.put("id_fichero", 0);
 
-        // Verify initial state - no user with this email should exist
+        // Verificamos que no existe un usuario con ese email
         Usuario existingUser = usuarioRepositorio.findByEmail("nuevo@test.com");
         assertNull(existingUser, "No user with this email should exist before creation");
 
-        // Perform the POST request
+        // Petición POST
         mockMvc.perform(post("/usuarios")
                         .with(user("testuser").roles("ADMIN")).with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -154,7 +154,7 @@ public class ControladorUsuarioIT {
                 .andExpect(jsonPath("$.id").exists())
                 .andExpect(jsonPath("$.id").isNumber());
 
-        // Verify the user was created in the database
+        // Verificamos que el usuario se ha creado en la BBDD
         Usuario usuarioCreado = usuarioRepositorio.findByEmail("nuevo@test.com");
         assertNotNull(usuarioCreado, "User should be created in database");
         assertEquals("Nuevo", usuarioCreado.getNombre());
@@ -164,7 +164,6 @@ public class ControladorUsuarioIT {
         assertEquals(1, usuarioCreado.getPrivacidad());
         assertEquals(0, usuarioCreado.getComercial());
         
-        // Verify password is encrypted
         assertTrue(usuarioCreado.getPassword().length() > 0, "Password should not be empty");
         assertFalse(usuarioCreado.getPassword().equals("passwordSegura"), "Password should be encrypted");
     }

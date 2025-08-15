@@ -66,25 +66,20 @@ public class UsuarioServicio {
 	
 	public Usuario saveUsuario(Usuario u) {
         try {
-            System.out.println("UsuarioServicio.saveUsuario - Input password: " + u.getPassword());
-            
             if (u.getPassword() == null || u.getPassword().trim().isEmpty()) {
                 throw new IllegalArgumentException("La contraseña no puede ser nula o vacía.");
             }
 
             String encodedPassword = bCryptPasswordEncoder.encode(u.getPassword().trim());
-            System.out.println("UsuarioServicio.saveUsuario - Encoded password: " + encodedPassword);
             u.setPassword(encodedPassword);
 
             Usuario savedUser = ur.saveAndFlush(u);
-            System.out.println("UsuarioServicio.saveUsuario - Saved user ID: " + (savedUser != null ? savedUser.getId() : "null"));
 
             if (savedUser == null) {
                  throw new IllegalStateException("Fallo al guardar el usuario en la base de datos.");
             }
             return savedUser;
         } catch (Exception e) {
-            System.err.println("UsuarioServicio.saveUsuario - Error: " + e.getMessage());
             throw e;
         }
     }
