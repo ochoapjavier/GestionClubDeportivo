@@ -2,6 +2,7 @@ package com.example.demo.controladores;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.Deporte;
 import com.example.demo.servicios.DeporteServicio;
 
-@CrossOrigin(origins = "${frontend.url}")
 @RestController
 @RequestMapping({"/deportes"})
 public class ControladorDeporte {
@@ -18,8 +18,8 @@ public class ControladorDeporte {
 	private DeporteServicio ds;
 	
 	@GetMapping()
-	 List<Deporte> listarDeportes() {
-	    return ds.listarDeportes();
+	 ResponseEntity<List<Deporte>> listarDeportes() {
+	    return ResponseEntity.ok(ds.listarDeportes());
 	  }
 	
 }

@@ -2,6 +2,7 @@ package com.example.demo.controladores;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.EstadoCompeticiones;
 import com.example.demo.servicios.EstadoServicio;
 
-@CrossOrigin(origins = "${frontend.url}")
 @RestController
 @RequestMapping({"/estados"})
 public class ControladorEstado {
@@ -18,8 +18,8 @@ public class ControladorEstado {
 	private EstadoServicio es;
 	
 	@GetMapping()
-	 List<EstadoCompeticiones> listarEstados() {
-	    return es.listarEstados();
+	 ResponseEntity<List<EstadoCompeticiones>> listarEstados() {
+	    return ResponseEntity.ok(es.listarEstados());
 	  }
 	
 }

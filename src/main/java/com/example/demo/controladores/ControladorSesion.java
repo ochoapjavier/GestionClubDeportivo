@@ -1,7 +1,11 @@
 package com.example.demo.controladores;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.Sesion;
 import com.example.demo.servicios.SesionServicio;
 
-@CrossOrigin(origins = "${frontend.url}")
 @RestController
 @RequestMapping({"/sesion"})
 public class ControladorSesion {
@@ -24,62 +27,65 @@ public class ControladorSesion {
 	SesionServicio ss;
 	
 	@GetMapping()
-	public List <Sesion> listaSesiones(){
+	public ResponseEntity<List<Sesion>> listaSesiones(){
 		List <Sesion> s = ss.listarSesiones();
-		return s;
+		return ResponseEntity.ok(s);
 	}
 	
 	@GetMapping("/{id}")
-	public Sesion getSesionById(@PathVariable int id){
-		return ss.findById(id);
+	public ResponseEntity<Sesion> getSesionById(@PathVariable int id){
+		Sesion sesion = ss.findById(id);
+		return sesion != null ? ResponseEntity.ok(sesion) : ResponseEntity.notFound().build();
 	}
 	
 	@GetMapping("/user/{id}")
-	public List <Sesion> getSesionByUserId(@PathVariable int id){
-		return ss.listarSesionesByUserID(id);
+	public ResponseEntity<List<Sesion>> getSesionByUserId(@PathVariable int id){
+		return ResponseEntity.ok(ss.listarSesionesByUserID(id));
 	}
 	
 	@GetMapping("/user/futuras/{id}")
-	public List <Sesion> getSesionesFuturasByUserId(@PathVariable int id){
-		return ss.listarSesionesFuturasByUserID(id);
+	public ResponseEntity<List<Sesion>> getSesionesFuturasByUserId(@PathVariable int id){
+		return ResponseEntity.ok(ss.listarSesionesFuturasByUserID(id));
 	}
 	
 	@GetMapping("/monitor/{id}")
-	public List <Sesion> getSesionByMonitorId(@PathVariable int id){
-		return ss.listarSesionesByMonitorID(id);
+	public ResponseEntity<List<Sesion>> getSesionByMonitorId(@PathVariable int id){
+		return ResponseEntity.ok(ss.listarSesionesByMonitorID(id));
 	}
 	
 	@GetMapping("/monitor/futuras/{id}")
-	public List <Sesion> getSesionesFuturasByMonitorId(@PathVariable int id){
-		return ss.listarSesionesFuturasByMonitorID(id);
+	public ResponseEntity<List<Sesion>> getSesionesFuturasByMonitorId(@PathVariable int id){
+		return ResponseEntity.ok(ss.listarSesionesFuturasByMonitorID(id));
 	}
 	
 	@PostMapping()
-	public Sesion crearSesion(@Validated @RequestBody Sesion sesion) {
+	public ResponseEntity<?> crearSesion(@Validated @RequestBody Sesion sesion) {
 		if (ss.findByFechaYGrupo(sesion.getId_grupo().getId_monitor().getId(), sesion.getId_grupo().getId(), sesion.getFecha()) != null) {
-			sesion.setId(-1);
-			return sesion;
+			Map<String, String> errorResponse = Collections.singletonMap("message", "Ya existe una sesión para este grupo en la fecha seleccionada.");
+			return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
 		} else {
 			ss.saveSesion(sesion);
-		}		
-		return sesion;
+			return new ResponseEntity<>(sesion, HttpStatus.CREATED);
+		}
     }
 	
 	@PutMapping()
-	public Sesion actualizarSesion(@Validated @RequestBody Sesion sesion) {
-		Sesion s = new Sesion();
-		s.setId(sesion.getId());
-		s.setId_grupo(sesion.getId_grupo());
-		s.setFecha(sesion.getFecha());
-		s.setTitulo(sesion.getTitulo());
-		s.setDescripcion(sesion.getDescripcion());	
-		ss.actualizarSesion(s);
-		return s;
+	public ResponseEntity<Sesion> actualizarSesion(@Validated @RequestBody Sesion sesion) {
+		try {
+			Sesion sesionActualizada = ss.actualizarSesion(sesion);
+			return ResponseEntity.ok(sesionActualizada);
+		} catch (RuntimeException e) {
+			return ResponseEntity.notFound().build();
+		}
     }
 	
 	@DeleteMapping("/{id}")
-	public void eliminarSesion(@PathVariable int id) {
+	public ResponseEntity<Void> eliminarSesion(@PathVariable int id) {
+		if (ss.findById(id) == null) {
+			return ResponseEntity.notFound().build();
+		}
 		ss.eliminarSesion(id);
+		return ResponseEntity.noContent().build();
     }
 		
 }

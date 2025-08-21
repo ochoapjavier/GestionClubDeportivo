@@ -3,6 +3,8 @@ package com.example.demo.controladores;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,7 +20,6 @@ import com.example.demo.model.PistaTenis;
 import com.example.demo.servicios.PistaPadelServicio;
 import com.example.demo.servicios.PistaTenisServicio;
 
-@CrossOrigin(origins = "${frontend.url}")
 @RestController
 @RequestMapping({"/pistas"})
 public class ControladorPista {
@@ -30,71 +31,71 @@ public class ControladorPista {
 	PistaPadelServicio pps;
 	
 	@GetMapping("/tenis")
-	public List <PistaTenis> listarPistasTenis(){
+	public ResponseEntity<List<PistaTenis>> listarPistasTenis(){
 		List <PistaTenis> pistas = pts.listarPistas();
-		return pistas;
+		return ResponseEntity.ok(pistas);
 	}
 	 
 	@GetMapping("/tenis/{id}")
-	public Optional<PistaTenis> getPistaTenis(@PathVariable String id){
-		 return pts.findById(id);
-
+	public ResponseEntity<PistaTenis> getPistaTenis(@PathVariable String id){
+		 return pts.findById(id)
+				 .map(ResponseEntity::ok)
+				 .orElse(ResponseEntity.notFound().build());
 	}
 
 	@GetMapping("/padel")
-	public List <PistaPadel> listarPistasPadel(){
+	public ResponseEntity<List<PistaPadel>> listarPistasPadel(){
 		List <PistaPadel> pistas = pps.listarPistas();
-		return pistas;
+		return ResponseEntity.ok(pistas);
 	}
 	
 	@GetMapping("/padel/{id}")
-	public Optional<PistaPadel> getPistaPadel(@PathVariable String id){
-		 return pps.findById(id);
-
+	public ResponseEntity<PistaPadel> getPistaPadel(@PathVariable String id){
+		return pps.findById(id)
+				.map(ResponseEntity::ok)
+				.orElse(ResponseEntity.notFound().build());
 	}
 	
 	@PostMapping("/tenis")
-	public PistaTenis crearPistaTenis(@Validated @RequestBody PistaTenis pista) {
+	public ResponseEntity<PistaTenis> crearPistaTenis(@Validated @RequestBody PistaTenis pista) {
 		pts.savePista(pista);
-		return pista;
+		return new ResponseEntity<>(pista, HttpStatus.CREATED);
    }
 	
 	@PostMapping("/padel")
-	public PistaPadel crearPistaPadel(@Validated @RequestBody PistaPadel pista) {
+	public ResponseEntity<PistaPadel> crearPistaPadel(@Validated @RequestBody PistaPadel pista) {
 		pps.savePista(pista);
-		return pista;
+		return new ResponseEntity<>(pista, HttpStatus.CREATED);
    }
 	
 	@PutMapping("/tenis")
-	public PistaTenis actualizarPistaTenis(@Validated @RequestBody PistaTenis pista) {
-		PistaTenis p = new PistaTenis();
-		p.setId_pista(pista.getId_pista());
-		p.setNombre(pista.getNombre());
-		p.setId_superficie(pista.getId_superficie());
-		pts.actualizarPistaTenis(p);
-		return p;
+	public ResponseEntity<PistaTenis> actualizarPistaTenis(@Validated @RequestBody PistaTenis pista) {
+		boolean actualizada = pts.actualizarPistaTenis(pista);
+		return actualizada ? ResponseEntity.ok(pista) : ResponseEntity.notFound().build();
 	}
 	
 	@PutMapping("/padel")
-	public PistaPadel actualizarPistaPadel(@Validated @RequestBody PistaPadel pista) {
-		PistaPadel p = new PistaPadel();
-		p.setId_pista(pista.getId_pista());
-		p.setNombre(pista.getNombre());
-		p.setId_superficie(pista.getId_superficie());
-		p.setCobertura(pista.getCobertura());
-		p.setTipoPared(pista.getTipoPared());
-		pps.actualizarPistaPadel(p);
-		return p;
+	public ResponseEntity<PistaPadel> actualizarPistaPadel(@Validated @RequestBody PistaPadel pista) {
+		boolean actualizada = pps.actualizarPistaPadel(pista);
+		return actualizada ? ResponseEntity.ok(pista) : ResponseEntity.notFound().build();
 	}
 	
-	@DeleteMapping("tenis/{id}")
-	public void eliminarPistaTenis(@PathVariable String id) {
+	@DeleteMapping("/tenis/{id}")
+	public ResponseEntity<Void> eliminarPistaTenis(@PathVariable String id) {
+		if (!pts.findById(id).isPresent()) {
+			return ResponseEntity.notFound().build();
+		}
 		pts.eliminarPistaTenis(id);
+		return ResponseEntity.noContent().build();
     }
 	
-	@DeleteMapping("padel/{id}")
-	public void eliminarPistaPadel(@PathVariable String id) {
+	@DeleteMapping("/padel/{id}")
+	public ResponseEntity<Void> eliminarPistaPadel(@PathVariable String id) {
+		if (!pps.findById(id).isPresent()) {
+			return ResponseEntity.notFound().build();
+		}
 		pps.eliminarPistaPadel(id);
+		return ResponseEntity.noContent().build();
     }
 	
 }

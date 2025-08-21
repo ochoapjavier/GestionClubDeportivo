@@ -2,6 +2,8 @@ package com.example.demo.controladores;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.Superficie;
 import com.example.demo.servicios.SuperficiesServicio;
 
-@CrossOrigin(origins = "${frontend.url}")
 @RestController
 @RequestMapping({"/superficies"})
 public class ControladorSuperficie {
@@ -25,38 +26,36 @@ public class ControladorSuperficie {
 	
 	//Método para listar todos los torneos
 	@GetMapping("/tenis")
-	public List <Superficie> listaSuperficiesTenis(){
+	public ResponseEntity<List<Superficie>> listaSuperficiesTenis(){
 		List <Superficie> superficies = ss.listarSuperficiesDeporte("tenis");
-		return superficies;
+		return ResponseEntity.ok(superficies);
 	}
 	
 	@GetMapping("/padel")
-	public List <Superficie> listaSuperficiesPadel(){
+	public ResponseEntity<List<Superficie>> listaSuperficiesPadel(){
 		List <Superficie> superficies = ss.listarSuperficiesDeporte("padel");
-		return superficies;
+		return ResponseEntity.ok(superficies);
 	}
 	
 	 //Método para añadir un torneo
 	@PostMapping()
-	public Superficie crearSuperficie(@Validated @RequestBody Superficie superficie) {
+	public ResponseEntity<Superficie> crearSuperficie(@Validated @RequestBody Superficie superficie) {
 		ss.saveSuperficie(superficie);
-		return superficie;
+		return new ResponseEntity<>(superficie, HttpStatus.CREATED);
     }
 	
 	//Método para actualizar un torneo 
 	@PutMapping()
-	public Superficie actualizarSuperficie(@Validated @RequestBody Superficie superficie) {
-		Superficie s = new Superficie();
-		s.setNombre(superficie.getNombre());
-		s.setDeporte(superficie.getDeporte());
-		ss.actualizarSuperficie(s);
-		return s;
+	public ResponseEntity<Superficie> actualizarSuperficie(@Validated @RequestBody Superficie superficie) {
+		boolean actualizada = ss.actualizarSuperficie(superficie);
+		return actualizada ? ResponseEntity.ok(superficie) : ResponseEntity.notFound().build();
     }
 	
 	//Método para borrar un torneo a partir de su id
 	@DeleteMapping("/{id}")
-	public void eliminarSuperficie(@PathVariable int id) {
+	public ResponseEntity<Void> eliminarSuperficie(@PathVariable int id) {
 		ss.eliminarSuperficie(id);
+		return ResponseEntity.noContent().build();
     }
 
 }

@@ -3,6 +3,8 @@ package com.example.demo.controladores;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.GrupoEscuela;
 import com.example.demo.servicios.GrupoServicio;
 
-@CrossOrigin(origins = "${frontend.url}")
 @RestController
 @RequestMapping({"/grupos"})
 public class ControladorGrupo {
@@ -24,40 +25,43 @@ public class ControladorGrupo {
 	GrupoServicio gs;
 	
 	@GetMapping()
-	public List <GrupoEscuela> listarGrupos(){
+	public ResponseEntity<List<GrupoEscuela>> listarGrupos(){
 		List <GrupoEscuela> grupos = gs.listarGrupos();
-		return grupos;
+		return ResponseEntity.ok(grupos);
 	}
 	
 	@GetMapping("/monitor/{id}")
-	public List <GrupoEscuela> listarGruposByMonitorId(@PathVariable int id){
+	public ResponseEntity<List<GrupoEscuela>> listarGruposByMonitorId(@PathVariable int id){
 		List <GrupoEscuela> grupos = gs.listarGruposByMonitorId(id);
-		return grupos;
+		return ResponseEntity.ok(grupos);
 	}
 	
 	@GetMapping("/usuario/{id}")
-	public List <GrupoEscuela> listarGruposByUsuarioId(@PathVariable int id){
+	public ResponseEntity<List<GrupoEscuela>> listarGruposByUsuarioId(@PathVariable int id){
 		List <GrupoEscuela> grupos = gs.listarGruposByUsuarioId(id);
-		return grupos;
+		return ResponseEntity.ok(grupos);
 	}
 	
 	@GetMapping("/id/{id}")
-	public GrupoEscuela listarGrupoById(@PathVariable int id){
-		GrupoEscuela grupos = gs.listarGrupoById(id);
-		return grupos;
+	public ResponseEntity<GrupoEscuela> listarGrupoById(@PathVariable int id){
+		GrupoEscuela grupo = gs.listarGrupoById(id);
+		return grupo != null ? ResponseEntity.ok(grupo) : ResponseEntity.notFound().build();
 	}
 	
 	@PostMapping()
-	public GrupoEscuela crearGrupo(@Validated @RequestBody GrupoEscuela grupo) {
+	public ResponseEntity<GrupoEscuela> crearGrupo(@Validated @RequestBody GrupoEscuela grupo) {
 		gs.saveGrupo(grupo);
-		return grupo;
+		return new ResponseEntity<>(grupo, HttpStatus.CREATED);
     }
 	
 	@DeleteMapping("/{id}")
-	public GrupoEscuela eliminarCompeticion(@PathVariable int id) {
+	public ResponseEntity<Void> eliminarGrupo(@PathVariable int id) {
 		GrupoEscuela g = gs.findById(id);
+		if (g == null) {
+			return ResponseEntity.notFound().build();
+		}
 		gs.eliminarGrupo(id);
-		return g;
+		return ResponseEntity.noContent().build();
     }
 	
 }

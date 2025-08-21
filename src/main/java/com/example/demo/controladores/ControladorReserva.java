@@ -3,6 +3,8 @@ package com.example.demo.controladores;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.ReservaPista;
 import com.example.demo.servicios.ReservaPistaServicio;
 
-@CrossOrigin(origins = "${frontend.url}")
 @RestController
 @RequestMapping({"/reservas"})
 public class ControladorReserva {
@@ -25,54 +26,57 @@ public class ControladorReserva {
 	ReservaPistaServicio rps;
 	
 	@GetMapping()
-	public List <ReservaPista> listaReservas(){
+	public ResponseEntity<List<ReservaPista>> listaReservas(){
 		List <ReservaPista> rp = rps.listarReservas();
-		return rp;
+		return ResponseEntity.ok(rp);
 	}
 	
 	@GetMapping("id/{id}")
-	public ReservaPista getReservaById(@PathVariable int id){
-		return rps.findById(id);
+	public ResponseEntity<ReservaPista> getReservaById(@PathVariable int id){
+		ReservaPista reserva = rps.findById(id);
+		return reserva != null ? ResponseEntity.ok(reserva) : ResponseEntity.notFound().build();
 	}
 	
 	@GetMapping("fecha/{fecha}")
-	public List <ReservaPista> getReservasByFecha(@PathVariable String fecha){
+	public ResponseEntity<List<ReservaPista>> getReservasByFecha(@PathVariable String fecha){
 		LocalDate conver = LocalDate.parse(fecha);
-		return rps.findByFecha(conver);
+		return ResponseEntity.ok(rps.findByFecha(conver));
 	}
 	 
 	@GetMapping("/{id}/{fecha}")
-	public List<ReservaPista> getReservaByIdFecha(@PathVariable String id, @PathVariable String fecha){
+	public ResponseEntity<List<ReservaPista>> getReservaByIdFecha(@PathVariable String id, @PathVariable String fecha){
 		 LocalDate conver = LocalDate.parse(fecha);
-		 return rps.listarReservaIdFecha(id, conver);
+		 return ResponseEntity.ok(rps.listarReservaIdFecha(id, conver));
 	}
 	
 	@GetMapping("idUsuario/{id_usuario}")
-	public List<ReservaPista> getReservaByIdUsuario(@PathVariable int id_usuario){
-		return rps.findByIdUsuario(id_usuario);
+	public ResponseEntity<List<ReservaPista>> getReservaByIdUsuario(@PathVariable int id_usuario){
+		return ResponseEntity.ok(rps.findByIdUsuario(id_usuario));
 	}
 	 
 	@PostMapping()
-	public ReservaPista crearReserva(@Validated @RequestBody ReservaPista rp) {
+	public ResponseEntity<ReservaPista> crearReserva(@Validated @RequestBody ReservaPista rp) {
 		rps.saveReserva(rp);
-		return rp;
+		return new ResponseEntity<>(rp, HttpStatus.CREATED);
     }
 	
 	@PutMapping()
-	public ReservaPista actualizarReserva(@Validated @RequestBody ReservaPista reserva) {
-		ReservaPista rp = new ReservaPista();
-		rp.setId(reserva.getId());
-		rp.setId_pista(reserva.getId_pista());
-		rp.setFecha(reserva.getFecha());
-		rp.setId_horario(reserva.getId_horario());
-		rp.setId_usuario(reserva.getId_usuario());
-		rps.actualizarReserva(rp);
-		return rp;
+	public ResponseEntity<ReservaPista> actualizarReserva(@Validated @RequestBody ReservaPista reserva) {
+		try {
+			ReservaPista reservaActualizada = rps.actualizarReserva(reserva);
+			return ResponseEntity.ok(reservaActualizada);
+		} catch (RuntimeException e) {
+			return ResponseEntity.notFound().build();
+		}
     }
 	
 	@DeleteMapping("/{id}")
-	public void eliminarReserva(@PathVariable int id) {
+	public ResponseEntity<Void> eliminarReserva(@PathVariable int id) {
+		if (rps.findById(id) == null) {
+			return ResponseEntity.notFound().build();
+		}
 		rps.eliminarReserva(id);
+		return ResponseEntity.noContent().build();
     }
 	
 }
